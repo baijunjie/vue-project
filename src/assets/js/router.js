@@ -9,7 +9,7 @@
  * - getRoute    根据 key、value 获取在 routes 中对应的配置对象
  * - findRoute   根据 key、value 获取传入的 routes 中对应的配置对象（用于权限控制的修改，只有在调用 setRoutes 之前修改才有效）
  * - deleteRoute 根据 key、value 删除传入的 routes 中对应的配置对象（用于权限控制的删除，只有在调用 setRoutes 之前删除才有效）
- * - matchRoutes 传入 vue-router 的路由信息对象，返回一个路由数组，表示从根路由开始到当前路由所经过的路由组成的数组（用于生成面包屑）
+ * - matchRoutes 传入 vue-router 的路由信息对象，返回一个路由数组，表示从根路由开始到该路由结束，所经过的所有路由组成的数组（用于生成面包屑）
  *
  * 属性：
  * - routes      指向路由的配置对象 routes
