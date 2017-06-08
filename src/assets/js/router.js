@@ -90,7 +90,7 @@ function toVueRoutes(routes, parentRoute) {
 
 function findRoute(routes, key, value) {
     let targetRoute;
-    routes.some((route) => {
+    routes.some(route => {
         if (route[key] === value) {
             return targetRoute = route;
         } else if (route.children && route.children.length) {

@@ -220,6 +220,11 @@ export function findSameValueOfObjectFromArray(arr, key, value) {
 	return findItem;
 }
 
+// 将字符串替换为 <br/>
+export function textWrapToHtml(text) {
+    return typeof text === 'string' ? text.replace(/\n|\r/g, '<br/>') : '';
+}
+
 // 打印log (用于过滤 vue 生成的 getter、setter)
 export function log() {
 	let args = [];
