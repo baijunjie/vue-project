@@ -22,7 +22,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const parentComponent = {
-	template: '<router-view></router-view>'
+    template: '<router-view></router-view>'
 };
 
 const slashStartReg = new RegExp('^/+');
@@ -45,16 +45,16 @@ router.matchRoutes = matchRoutes;
 
 function toVueRoutes(routes, parentRoute) {
 
-	routes.forEach(function(route) {
-		route.parent = parentRoute;
+    routes.forEach(function(route) {
+        route.parent = parentRoute;
 
         if (!route.component) {
             route.empty = true;
         }
 
-		if (typeof route.path === 'undefined' && route.name) {
-			route.path = route.name;
-		}
+        if (typeof route.path === 'undefined' && route.name) {
+            route.path = route.name;
+        }
 
         // 在递归中过滤掉创建的默认子路由
         if (!route.meta) {
@@ -69,23 +69,23 @@ function toVueRoutes(routes, parentRoute) {
             }
         }
 
-		if (route.children && route.children.length) {
-			if (route.component) {
-				route.children.unshift({
+        if (route.children && route.children.length) {
+            if (route.component) {
+                route.children.unshift({
                     meta: route,
-					name: route.name,
-					path: '',
-					component: route.component
-				});
-				delete route.name;
-			}
+                    name: route.name,
+                    path: '',
+                    component: route.component
+                });
+                delete route.name;
+            }
 
-			route.component = parentComponent;
+            route.component = parentComponent;
             route.children = toVueRoutes(route.children, route);
-		}
-	});
+        }
+    });
 
-	return routes;
+    return routes;
 }
 
 function findRoute(routes, key, value) {
