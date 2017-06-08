@@ -1,0 +1,129 @@
+@charset "UTF-8";
+@import "_config.less";
+@import "_normalize.less";
+@import "_popup.less";
+
+html { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+body, dl, dd, h1, h2, h3, h4, h5, h6, p, form, input { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+i, em { font-style: normal; }
+img { max-width: 100%; }
+
+body {
+	.fix;
+	position: relative;
+	font-family: @ft, @ftdef;
+	font-size: @ftsz;
+	background-color: @bgcl;
+	color: @ftcl;
+	.wbw;
+}
+a { .acl(@lkcl); }
+
+.input {
+	.input();
+	&.red         { .input-bdcl(@red); }
+	&.transparent { .input-bdcl(none); }
+
+	& ~ * {
+		margin-left: 5px;
+	}
+}
+
+.textarea {
+	&:extend(.input);
+	resize: vertical;
+	height: auto;
+	line-height: 1.5;
+	padding: .5em;
+}
+
+.button {
+	.btn();
+	&.blue   { .btn-color(@blue); }
+	&.green  { .btn-color(@green); }
+	&.yellow { .btn-color(@yellow); }
+	&.red    { .btn-color(@red); }
+	&.sky    { .btn-color(@sky); }
+	&.gray   { .btn-color(@gray); }
+
+	& ~ * {
+		margin-left: 5px;
+	}
+}
+
+.select {
+	.select();
+	&.transparent { .select-bdcl(none); }
+}
+
+.select2 {
+	.select2();
+	&.transparent { .select-bdcl(none); }
+}
+
+.checkbox {
+	.checkbox();
+}
+
+.radio {
+	.radio();
+}
+
+.switch {
+	.switch();
+}
+
+.progress {
+	.pgs();
+}
+
+.hfg { .form-group(h); }
+.vfg { .form-group(v); }
+
+
+// 常用类
+.hide { visibility: hidden !important; }
+.none, [v-cloak] { display: none !important; }
+
+.noa {
+	.acl(none);
+}
+
+.full {
+	width: 100%;
+}
+
+.wrap {
+	width: @min_width - 20px;
+	padding: 0 10px;
+	.blhc();
+}
+
+.share-img {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.opacity-img {
+	.transition(opacity .3s);
+	.active({ .op(.8) !important; });
+}
+
+.shadow-box {
+	.transition(box-shadow .3s);
+	.active({
+		.bxsd(box) !important;
+	});
+}
+
+.directload img,
+.lazyload img {
+	.sz(100%);
+	.bgcl(#ccc);
+	.bgimg("/static/vrwanjia/img/watermark.png");
+	.bgsz(80%);
+}

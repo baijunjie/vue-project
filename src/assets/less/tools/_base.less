@@ -1,0 +1,552 @@
+/////////////////////////////////// 基础工具 ///////////////////////////////////
+
+// 转换行内块元素
+.inbl() {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+// 设置盒模型为边框盒
+.bxbd() {
+	.box-sizing(border-box);
+}
+
+// 清除浮动
+.clear() {
+	*zoom: 1;
+	&:after {
+		content: '';
+		display: table; //IE9.js在为IE6-7做兼容时会生成一个元素来模拟伪元素，空的table元素将不会产生高度
+		clear: both;
+	}
+}
+
+// 锁定顶部（IE6-7不存在此问题）
+.fix() {
+	&:before {
+		content: '';
+		display: table;
+	}
+}
+
+// 清除浮动并锁定顶部和底部
+.cf() {
+	*zoom: 1;
+	&:before,
+	&:after {
+		content: '';
+		display: table;
+	}
+	&:after { clear: both; }
+}
+
+// 粗体
+.b() { font-weight: bold; }
+// 取消粗体
+.nob() { font-weight: normal; }
+// 斜体
+.i() { font-style: italic; }
+// 取消斜体
+.noi() { font-style: normal; }
+
+// 删除线
+.del() { text-decoration: line-through; }
+
+// 文本溢出三点显示
+.of3p() {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+// 多行文本截断并加三点（webkit 专用）
+.vof3p(@lineCount: 1) {
+	overflow : hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: @lineCount;
+	-webkit-box-orient: vertical;
+}
+
+// 文本隐藏
+.tthd() {
+	color: transparent;
+    text-indent: 200%;
+	text-shadow: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+// 文本截断
+.wba() { //无视默认换行规则，文本到达尽头强行截断换行
+	white-space: normal;
+	word-break: break-all;
+}
+.wbw() { //默认的换行规则，超长单词强行截断
+	white-space: normal;
+	word-break: normal;
+	word-wrap: break-word;
+}
+
+// 禁止换行
+.nowrap() {
+	white-space: nowrap;
+}
+
+// 禁止选择
+.nosel() {
+	.user-select(none);
+}
+
+// 禁止长按弹出菜单
+.nohold() {
+	-webkit-touch-callout: none;
+}
+
+// 禁止元素响应交互事件
+.noevt() {
+	pointer-events: none;
+}
+
+// 清除掉浏览器对表单元素的默认样式
+.noapp() {
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	outline: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	&::-moz-focus-inner { // 火狐浏览器下按钮元素会有私有的 padding 和 border，需要通过私有伪类来重置
+		padding: 0;
+		border: 0;
+	}
+	&::-ms-expand { // 隐藏掉ie10+下拉框的按钮
+		display: none;
+	}
+	&::-ms-clear { // 隐藏IE10+浏览器文本框末尾的关闭小叉叉
+		display: none;
+	}
+}
+
+
+// IOS设备上使一般容器的scroll区域获得弹性滑动效果
+.scroll() {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+// 轮廓线
+.outline() {
+	outline: thin dotted;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+}
+
+
+// 设置非默认值，如果等于默认值，则不输出
+.set(@proprety, @value, @default: auto) when not(@value = @default) {
+	@{proprety}: @value;
+}
+
+
+// 设置大小
+.sz(@width, @height: @width) {
+	width: @width;
+	height: @height;
+}
+
+// 等比例设置大小
+// 第3个参数传入的宽度的实际值，而前两个参数只是用来计算宽高比
+// 如果第3个参数为百分比，则使用padding-top作为百分比的高度
+.sz(@width, @height, @real_width) when (ispercentage(@real_width)) {
+	width: @real_width;
+	height: 0;
+	padding-top: @real_width * @height / @width;
+}
+// 如果第3个参数为绝对值，则计算出的高度也为绝对值
+.sz(@width, @height, @real_width) when not(ispercentage(@real_width)) {
+	width: @real_width;
+	height: @real_width * @height / @width;
+}
+
+// 第4、5个参数表示容器的宽高比，该方法使用宽度百分比来计算元素高度在容器中的百分比
+// 如果第3个参数为百分比，则计算出高度的百分比
+.sz(@width, @height, @real_width, @container_width, @container_height) when (ispercentage(@real_width)) {
+	width: @real_width;
+	height: @real_width * @container_width * @height / @width / @container_height;
+}
+// 如果第3个参数为绝对值，则按容器的宽高分别计算出元素宽高的百分比
+.sz(@width, @height, @real_width, @container_width, @container_height) when not(ispercentage(@real_width)) {
+	width: 100% * @real_width / @container_width;
+	height: 100% * @real_width * @height / @width / @container_height;
+}
+
+// 设置相对大小
+// 第3个参数为一个基础宽度，表示将宽高按基础宽度换算为等比例的百分比（这里的高度使用的是padding-top）
+.sz-rel(@width, @height, @base_width) {
+	width: 100% * @width / @base_width;
+	& when not(@height=auto) {
+		height: 0;
+		padding-top: 100% * @height / @base_width;
+	}
+}
+
+
+// 可根据参数设置元素是否显示
+.set-width(@width) when (isnumber(@width)) and (@width<=0) { display: none; width: 0; }
+.set-width(@width) when (default()) { width: @width; }
+.set-height(@height) when (isnumber(@height)) and (@height<=0) { display: none; height: 0; }
+.set-height(@height) when (default()) { height: @height; }
+
+
+// IE6兼容最小最大宽高（仅支持像素的数值）
+.min-width(@min_width) {
+	min-width: @min_width;
+	@minw: unit(@min_width);
+	_width: ~'expression(this.scrollWidth <= @{minw} ? "@{minw}px" : "auto")';
+}
+.max-width(@max_width) {
+	max-width: @max_width;
+	@maxw: unit(@max_width);
+	_width: ~'expression(this.scrollWidth >= @{maxw} ? "@{maxw}px" : "auto")';
+}
+.min-height(@min_height) {
+	min-height: @min_height;
+	@minh: unit(@min_height);
+	_height: ~'expression(this.scrollHeight <= @{minh} ? "@{minh}px" : "auto")';
+}
+.max-height(@max_height) {
+	max-height: @max_height;
+	@maxh: unit(@max_height);
+	_height: ~'expression(this.scrollHeight >= @{maxh} ? "@{maxh}px" : "auto")';
+}
+
+
+// 同时设置高度与行高
+.lh(@height) when (ispixel(@height)) {
+	height: @height;
+	line-height: @height;
+}
+.lh(@height) when (isem(@height)) {
+	height: @height;
+	line-height: unit(@height);
+}
+
+
+// 设置字体大小
+.ftsz(@size, @position: left center) when (ispixel(@size)) and (@size < 12px) and (@size > 0) {
+	font-size: @size;
+	text-align: extract(@position, 1);
+	-webkit-transform-origin: @position;
+	-webkit-transform: scale(unit(@size / 12px)); //由于 webkit 浏览器的字体不能小于 12px，因此需要单独设置缩放比例。
+	     -o-transform: scale(1); //由于 Opera 浏览器能够识别 webkit 前缀，因此需要重置比例为 1。
+	//由于inline元素对变换属性无效，因此只能针对 webkit 浏览器设置元素为行内块元素
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		display: inline-block;
+	}
+}
+.ftsz(@size, @align) when (default()) { //这里的第二个参数的主要作用是为了在不知道字体是否小于12px的情况下调用函数时，可以预先设置字体的对齐方式，以便能够与上面的函数正确兼容
+	font-size: @size;
+	text-align: extract(@align, 1);
+}
+.ftsz(@size) when (default()) {
+	font-size: @size;
+}
+
+
+// 透明度
+.op(@opacity) {
+	opacity: @opacity;
+	@opacity-ie: @opacity * 100;
+	filter: ~'alpha(opacity=@{opacity-ie})'; // IE8
+}
+
+
+// 添加激活时的代码块
+.active(@block, @active_class: active) {
+	&.@{active_class},
+	&:active {
+		@block();
+	}
+}
+
+// 添加指向时的代码块
+.hover(@block, @active_class: active) {
+	&.@{active_class},
+	&:active,
+	&:hover {
+		@block();
+	}
+}
+
+
+// 设置<a>链接的颜色及样式
+.acl-init(@color, @active_color, @decoration, @active_class) {
+	color: @color;
+	& when (@decoration = show) {
+		text-decoration: underline;
+	}
+	& when not(@decoration = show) {
+		text-decoration: none;
+	}
+
+	&.@{active_class},
+	&:active,
+	&:hover {
+		color: @active_color;
+		& when (@decoration = none) {
+			text-decoration: none;
+		}
+		& when not(@decoration = none) {
+			text-decoration: underline;
+		}
+	}
+}
+.acl(@color, @decoration: underline, @active_class: active) when (iscolor(@color)) {
+	.acl-init(@color, @color, @decoration, @active_class);
+}
+.acl(@color, @decoration: underline, @active_class: active) when (length(@color)>1) {
+	.acl-init(extract(@color, 1), extract(@color, 2), @decoration, @active_class);
+}
+.acl(@color, @decoration: none, @active_class: active) when (length(@color)=1) and not(iscolor(@color)) {
+	.acl-init(inherit, inherit, @decoration, @active_class);
+}
+
+
+// 设置背景颜色
+.bgcl(@color) when (iscolor(@color)) {
+	background-color: @color;
+}
+.bgcl(@color, @active_class: active) when (length(@color)>1) {
+	background-color: extract(@color, 1);
+
+	&.@{active_class},
+	&:active,
+	&:hover {
+		background-color: extract(@color, 2);
+	}
+}
+// 设置背景图
+.bgimg(@url, @align: center, @repeat: no-repeat) when not(@url = none) {
+	@len: length(@url);
+	.loop(@i) {
+		@src: e(extract(@url, @i));
+		background-image+: url(@src);
+		& when (@i < @len) {
+			.loop(@i+1);
+		}
+	}
+	.loop(1);
+	background-repeat+: @repeat;
+	background-position+: @align;
+}
+.bgimg(none) {
+	background-image: none;
+}
+// 采用base64转码背景图
+.bgimg2(@url, @align: center, @repeat: no-repeat) {
+	@len: length(@url);
+	.loop(@i) {
+		@src: e(extract(@url, @i));
+		background-image+: data-uri(@src);
+		& when (@i < @len) {
+			.loop(@i+1);
+		}
+	}
+	.loop(1);
+	background-repeat+: @repeat;
+	background-position+: @align;
+}
+.bgsvg(@svg, @align: center, @repeat: no-repeat) {
+    @url: `encodeURIComponent(@{svg})`;
+    background-image+: url('data:image/svg+xml;charset=utf-8,@{url}');
+	background-repeat+: @repeat;
+	background-position+: @align;
+}
+// 背景图大小
+.bgsz(@size) {
+	-webkit-background-size+: @size;
+	   -moz-background-size+: @size;
+	        background-size+: @size;
+}
+// 生成背景图列表（由于火狐不支持过长的 sprite 图片，因此在制作序列图时需要这样处理）
+// 图片名称必须以数字结尾，数字部分从0开始
+// .create-bgimg-list('360/sp-', 72, 'sp360-');
+.create-bgimg-list(@path, @count, @prefix: 'img', @extension: 'png') {
+	.loop(@i) {
+		@className: ~'@{prefix}@{i}';
+		@src: ~'@{path}@{i}.@{extension}';
+		.@{className} { background-image: url(@src); }
+		& when (@i < @count) {
+			.loop(@i + 1);
+		}
+	}
+	.loop(0);
+}
+
+
+// 边框
+.bd(@color: @default_border_color, @width: 1px, @style: solid) {
+	border: @width @style @color;
+}
+.lbd(@color: @default_border_color, @width: 1px, @style: solid) {
+	border-left: @width @style @color;
+}
+.rbd(@color: @default_border_color, @width: 1px, @style: solid) {
+	border-right: @width @style @color;
+}
+.tbd(@color: @default_border_color, @width: 1px, @style: solid) {
+	border-top: @width @style @color;
+}
+.bbd(@color: @default_border_color, @width: 1px, @style: solid) {
+	border-bottom: @width @style @color;
+}
+// 清楚边框
+.nobd() {
+	border-style: none;
+}
+.nolbd() {
+	border-left-style: none;
+}
+.norbd() {
+	border-right-style: none;
+}
+.notbd() {
+	border-top-style: none;
+}
+.nobbd() {
+	border-bottom-style: none;
+}
+
+// 阴影边框
+.sdbd(@color: @default_border_color, @width: 1px) {
+	.box-shadow(0 0 0 @width @color);
+}
+
+// 表格边框
+.tbbd(@color: @default_border_color, @width: 1px) {
+	background-color: extract(@color, 1);
+	border-spacing: @width;
+	border-collapse: separate;
+
+	tr {
+		& when (length(@color)=1) {
+			background-color: #fff;
+		}
+
+		& when (length(@color)>1) {
+			background-color: extract(@color, 2);
+		}
+	}
+}
+
+
+// 圆角边框
+.bdrd(@radius: 4px) {
+	-webkit-border-radius: @radius; //兼容 Android <2.0
+	border-radius: @radius;
+}
+
+
+// 文本阴影
+.text-shadow(@shadow) {
+	text-shadow+: @shadow;
+}
+.ttsd(none) {
+	.text-shadow(none);
+}
+.ttsd(@size: 0 1px 0, @color: @text_shadow_default_color) when not(iskeyword(@size)) and not(iscolor(@size)) {
+	.text-shadow(@size @color);
+}
+.ttsd(@color: @text_shadow_default_color) when (iscolor(@color)) {
+	.text-shadow(0 1px 0 @color);
+}
+.ttsd(skew, @color: @text_shadow_default_color) {
+	.text-shadow(1px 1px 0 @color);
+}
+.ttsd2(@color: @text_shadow_default_color) when (iscolor(@color)) {
+	.text-shadow(0 0 6px @color);
+}
+.ttsd2(skew, @color: @text_shadow_default_color) {
+	.text-shadow(2px 2px 4px @color);
+}
+
+
+// 盒阴影
+.bxsd(@size: 0 0 8px, @color: @box_shadow_default_color) when not(iskeyword(@size)) {
+	.box-shadow(@size @color);
+}
+.bxsd(skew, @color: @box_shadow_default_color) {
+	.box-shadow(2px 2px 4px @color);
+}
+.bxsd(left, @color: @box_shadow_default_color) {
+	.box-shadow(-4px 0 8px @color);
+}
+.bxsd(right, @color: @box_shadow_default_color) {
+	.box-shadow(4px 0 8px @color);
+}
+.bxsd(top, @color: @box_shadow_default_color) {
+	.box-shadow(0 -4px 8px @color);
+}
+.bxsd(bottom, @color: @box_shadow_default_color) {
+	.box-shadow(0 4px 8px @color);
+}
+.bxsd(box) {
+	.box-shadow(0 1px 2px 0 rgba(0,0,0,0.1), 0 4px 8px 0 rgba(0,0,0,0.2););
+}
+.bxsd(thin) {
+	.box-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+.bxsd(none) {
+	.box-shadow(none);
+}
+
+
+// 垂直线性渐变
+.vlg(@start_color, @end_color, @start_percent: 0%, @end_percent: 100%) {
+	#gradient > .vertical(@start_color, @end_color, @start_percent, @end_percent);
+}
+// 垂直三色线性渐变
+.vlg3(@start-color, @mid-color, @color-stop, @end-color) {
+	#gradient > .vertical-three-colors(@start-color, @mid-color, @color-stop, @end-color);
+}
+// 水平线性渐变
+.hlg(@start_color, @end_color, @start_percent: 0%, @end_percent: 100%) {
+	#gradient > .horizontal(@start_color, @end_color, @start_percent, @end_percent);
+}
+// 水平三色线性渐变
+.hlg3(@start-color, @mid-color, @color-stop, @end-color) {
+	#gradient > .horizontal-three-colors(@start-color, @mid-color, @color-stop, @end-color);
+}
+// 径向渐变
+.rg(@inner_color, @outer_color) {
+	#gradient > .radial(@inner_color, @outer_color);
+}
+
+
+// CSS3 运算
+.calc(@proprety, @value) {
+	@{proprety}: -webkit-calc(~'@{value}');
+	@{proprety}:    -moz-calc(~'@{value}');
+	@{proprety}:      -o-calc(~'@{value}');
+	@{proprety}:         calc(~'@{value}');
+}
+
+
+// 服务器字体
+.font-face(@name, @url, @font_weight: normal, @font_style: normal) {
+	@font-face {
+		font-family: '@{name}'; // 定义字体名称
+		src: url('@{url}.eot'); // IE9 Compat Modes
+		src: local('@{url}.ttf'),
+			url('@{url}.eot?#iefix') format('embedded-opentype'), // IE6-IE8
+			url('@{url}.woff2') format('woff2'),
+			url('@{url}.woff') format('woff'), // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
+			url('@{url}.ttf') format('truetype'), // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
+			url('@{url}.svg#@{name}') format('svg'); // Legacy iOS
+		font-weight: @font_weight; // 定义字体粗细
+		font-style: @font_style; // 定义字体样式，如斜体
+	}
+}

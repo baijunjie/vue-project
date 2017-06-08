@@ -1,0 +1,453 @@
+/////////////////////////////////// animation动画工具 ///////////////////////////////////
+
+// 透明度动画工具
+.animate-opacity(@animation_name, @start: 0, @end: 1, @duration: 1s, @easing: linear, @delay: 0s, @loop: infinite, @repeat: alternate) {
+	.animation(@animation_name @duration @loop @repeat);
+
+	@-webkit-keyframes @animation_name { .keyframes; }
+	@-moz-keyframes @animation_name { .keyframes; }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes() {
+		from { opacity: @start; }
+		to   { opacity: @end;   }
+	}
+}
+
+
+// 两点之间移动动画工具
+.animate-move(@animation_name, @start: 0 0, @end: 50px 0, @duration: 3s, @easing: ease-in-out, @delay: 0s, @loop: infinite, @repeat: alternate) {
+	.animation(@animation_name @duration @easing @delay @loop @repeat);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		from { @{prefix}transform: translate(extract(@start, 1), extract(@start, 2)); }
+		to   { @{prefix}transform: translate(extract(@end, 1),   extract(@end, 2)  ); }
+	}
+}
+
+
+// 缩放动画工具
+.animate-scale(@animation_name, @start: 0, @end: 1, @duration: 3s, @easing: ease-in-out, @delay: 0s, @loop: infinite, @repeat: alternate) {
+	.animation(@animation_name @duration @easing @delay @loop @repeat);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		from { @{prefix}transform: scale(@start); }
+		to   { @{prefix}transform: scale(@end);   }
+	}
+}
+
+
+// 旋转动画工具
+.animate-rotation(@animation_name, @start: 0, @end: 360, @duration: 1s, @easing: linear, @delay: 0s, @loop: infinite, @repeat: normal) {
+	.animation(@animation_name @duration @easing @delay @loop @repeat);
+	@start_angle: 0deg + unit(@start);
+	@end_angle: 0deg + unit(@end);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		from { @{prefix}transform: rotate(@start_angle); }
+		to   { @{prefix}transform: rotate(@end_angle);   }
+	}
+}
+
+
+// 发光动画
+.animate-glow(@animation_name, @color: #fff, @start: 0 0, @end: 20px 0, @duration: 2s, @easing: ease-in-out, @delay: 0s, @loop: infinite, @repeat: alternate) {
+	.animation(@animation_name @duration @easing @delay @loop @repeat);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes; }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		from { @{prefix}box-shadow: 0 0 @start @color; }
+		to   { @{prefix}box-shadow: 0 0 @end   @color; }
+	}
+}
+
+
+// 带投影的上下悬浮
+.animate-suspension(@obj_animation_name, @shadow_animation_name, @obj, @shadow, @obj_offset: 5px, @shadow_scale: 0.7, @duration: 1s) {
+	@obj_selector: e(@obj);
+	@shadow_selector: e(@shadow);
+
+	@{obj_selector} {
+		.animate-move(@obj_animation_name, 0 -@obj_offset, 0 @obj_offset, @duration, ease-out, 0s, infinite, alternate);
+	}
+	@{shadow_selector} {
+		.animate-scale(@shadow_animation_name, .7, 1, @duration, ease-out, 0s, infinite, alternate);
+	}
+}
+
+
+// 钟摆
+.animate-pendulum(@animation_name, @start: -30deg, @end: 30deg, @duration: 3s) {
+	.animate-rotation(@animation_name, @start, @end, @duration, ease-in-out, 0s, infinite, alternate);
+}
+
+
+// 心跳
+.animate-heartbeat(@animation_name, @duration: 1s) {
+	.animate-scale(@animation_name, 1, .7, @duration, ease-out, 0s, infinite, normal);
+}
+
+
+// 闪烁
+.animate-flash(@animation_name, @range: 1, @duration: .3s, @loop: infinite) {
+	.animate-opacity(@animation_name, 1, 1 - @range, @duration, linear, 0s, @loop, normal);
+}
+
+
+// 箭头
+.animate-arrow(@animation_name, @range: -20px, @duration: 1s, @direction: v) {
+	.getPoint(@direction) when (@direction = v) {
+		@start_point: 0 0;
+		@end_point: 0 @range;
+	}
+	.getPoint(@direction) when (@direction = h) {
+		@start_point: 0 0;
+		@end_point: @range 0;
+	}
+	.getPoint(@direction);
+
+	.animate-move(~'@{animation_name}-move', @start_point, @end_point, @duration, ease, 0s, @loop: infinite, normal);
+	.animate-opacity(~'@{animation_name}-opacity', 0, 1, @duration, ease, 0s, @loop: infinite, normal);
+}
+
+
+// 四个点之间漂浮
+.animate-float(@animation_name, @range: 10px, @duration: 6s, @isCCW: false) {
+	.animation(@animation_name @duration linear infinite);
+
+	@-webkit-keyframes @animation_name { .keyframes(@isCCW, '-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes(@isCCW, '-moz-'); }
+	@keyframes @animation_name { .keyframes(@isCCW); }
+
+	.keyframes(@isCCW, @prefixStr: '') when (@isCCW = false) {
+		@prefix: ~'@{prefixStr}';
+		0%   { @{prefix}transform: translate(-@range, 0); }
+		25%  { @{prefix}transform: translate(0, -@range); }
+		50%  { @{prefix}transform: translate(@range, 0);  }
+		75%  { @{prefix}transform: translate(0, @range);  }
+		100% { @{prefix}transform: translate(-@range, 0); }
+	}
+	.keyframes(@isCCW, @prefixStr: '') when (@isCCW = true) {
+		@prefix: ~'@{prefixStr}';
+		0%   { @{prefix}transform: translate(@range, 0);  }
+		25%  { @{prefix}transform: translate(0, -@range); }
+		50%  { @{prefix}transform: translate(-@range, 0); }
+		75%  { @{prefix}transform: translate(0, @range);  }
+		100% { @{prefix}transform: translate(@range, 0);  }
+	}
+}
+
+
+// 背景浮动
+.animate-bg(@animation_name, @range: 10, @duration: 60s, @isCCW: false) {
+	.animation(@animation_name @duration linear infinite);
+
+	@-webkit-keyframes @animation_name { .keyframes(@isCCW); }
+	@-moz-keyframes @animation_name { .keyframes(@isCCW); }
+	@keyframes @animation_name { .keyframes(@isCCW); }
+
+	@base: 50%;
+	@add: @base + @range;
+	@sub:  @base - @range;
+	.keyframes(@isCCW) when (@isCCW = false) {
+		0%   { background-position: @sub @base; }
+		25%  { background-position: @base @sub; }
+		50%  { background-position: @add @base; }
+		75%  { background-position: @base @add; }
+		100% { background-position: @sub @base; }
+	}
+	.keyframes(@isCCW) when (@isCCW = true) {
+		0%   { background-position: @add @base; }
+		25%  { background-position: @base @sub; }
+		50%  { background-position: @sub @base; }
+		75%  { background-position: @base @add; }
+		100% { background-position: @add @base; }
+	}
+}
+
+
+// 果冻
+.animate-jelly(@animation_name, @range: 1, @duration: 2s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	@step1: @range * .3;
+	@step2: @step1 * .3;
+	@step3: @step2 * .3;
+	@step4: @step3 * .3;
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0%   { @{prefix}transform: scale(1 + @step2, 1 + @step2); }
+		10%  { @{prefix}transform: scale(1         , 1 + @step1); }
+		20%  { @{prefix}transform: scale(1 + @step1, 1         ); }
+		30%  { @{prefix}transform: scale(1         , 1 + @step2); }
+		40%  { @{prefix}transform: scale(1 + @step2, 1         ); }
+		50%  { @{prefix}transform: scale(1         , 1 + @step3); }
+		60%  { @{prefix}transform: scale(1 + @step3, 1         ); }
+		70%  { @{prefix}transform: scale(1         , 1 + @step4); }
+		80%  { @{prefix}transform: scale(1 + @step4, 1         ); }
+		90%  { @{prefix}transform: scale(1         , 1         ); }
+		100% { @{prefix}transform: scale(1         , 1         ); }
+	}
+}
+
+
+// 反弹
+.animate-bounce(@animation_name, @range: -30px, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	@step1: @range * .3;
+	@step2: @step1 * .3;
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0%,20%,40%,60%,80%,100% { @{prefix}transform: translateY(0); }
+		30% { @{prefix}transform: translateY(@range); }
+		50% { @{prefix}transform: translateY(@step1); }
+		70% { @{prefix}transform: translateY(@step2); }
+	}
+}
+
+
+// 晃动
+.animate-shake(@animation_name, @range: 10px, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0%, 100% { @{prefix}transform: translateX(0); }
+		10%, 30%, 50%, 70%, 90% { @{prefix}transform: translateX(-@range); }
+		20%, 40%, 60%, 80% { @{prefix}transform: translateX(@range); }
+	}
+}
+
+
+// 摇晃
+.animate-wobble(@animation_name, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0%   { @{prefix}transform: translateX(0%); }
+		15%  { @{prefix}transform: translateX(-25%) rotate(-5deg); }
+		30%  { @{prefix}transform: translateX(20%) rotate(3deg); }
+		45%  { @{prefix}transform: translateX(-15%) rotate(-3deg); }
+		60%  { @{prefix}transform: translateX(10%) rotate(2deg); }
+		75%  { @{prefix}transform: translateX(-5%) rotate(-1deg); }
+		100% { @{prefix}transform: translateX(0%); }
+	}
+}
+
+
+// 摆动
+.animate-swing(@animation_name, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		20%,40%,60%,80%,100% { @{prefix}transform-origin: top center; }
+		20% { @{prefix}transform: rotate(15deg); }
+		40% { @{prefix}transform: rotate(-10deg); }
+		60% { @{prefix}transform: rotate(5deg); }
+		80% { @{prefix}transform: rotate(-5deg); }
+		100% { @{prefix}transform: rotate(0deg); }
+	}
+}
+
+
+// 扭动
+.animate-wiggle(@animation_name, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0%   { @{prefix}transform: skewX(9deg); }
+		10%  { @{prefix}transform: skewX(-8deg); }
+		20%  { @{prefix}transform: skewX(7deg); }
+		30%  { @{prefix}transform: skewX(-6deg); }
+		40%  { @{prefix}transform: skewX(5deg); }
+		50%  { @{prefix}transform: skewX(-4deg); }
+		60%  { @{prefix}transform: skewX(3deg); }
+		70%  { @{prefix}transform: skewX(-2deg); }
+		80%  { @{prefix}transform: skewX(1deg); }
+		90%  { @{prefix}transform: skewX(0deg); }
+		100% { @{prefix}transform: skewX(0deg); }
+	}
+}
+
+
+// tada
+.animate-tada(@animation_name, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0% { @{prefix}transform: scale(1); }
+		10%, 20% { @{prefix}transform: scale(0.9) rotate(-3deg); }
+		30%, 50%, 70%, 90% { @{prefix}transform: scale(1.1) rotate(3deg); }
+		40%, 60%, 80% { @{prefix}transform: scale(1.1) rotate(-3deg); }
+		100% { @{prefix}transform: scale(1) rotate(0); }
+	}
+}
+
+
+// 牌子掉落
+.animate-hinge(@animation_name, @isRight: false) {
+	.animation(@animation_name 1.5s);
+	.animation-fill-mode(both);
+
+	.getOrigin(@isRight) when (@isRight = true) {
+		@origin: top right;
+		@direction: -1;
+	}
+	.getOrigin(@isRight) when (@isRight = false) {
+		@origin: top left;
+		@direction: 1;
+	}
+	.getOrigin(@isRight);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		0% {
+			@{prefix}transform-origin: @origin;
+			@{prefix}transform: rotate(0);
+			@{prefix}animation-timing-function: ease-in-out;
+		}
+		20%,60% {
+			@{prefix}transform-origin: @origin;
+			@{prefix}transform: rotate(80deg * @direction);
+			@{prefix}animation-timing-function: ease-in-out;
+		}
+		40% {
+			@{prefix}transform-origin: @origin;
+			@{prefix}transform: rotate(60deg * @direction);
+			@{prefix}animation-timing-function: ease-in-out;
+		}
+		80% {
+			@{prefix}transform-origin: @origin;
+			@{prefix}transform: rotate(60deg * @direction) translateY(0);
+			@{prefix}animation-timing-function: ease-in-out;
+			opacity:1;
+		}
+		100% {
+			@{prefix}transform-origin: @origin;
+			@{prefix}transform: translateY(700px);
+			opacity:0;
+		}
+	}
+}
+
+
+// 抖动
+.animate-quiver(@animation_name, @duration: 1s, @loop: infinite) {
+	.animation(@animation_name @duration @loop);
+
+	@-webkit-keyframes @animation_name { .keyframes('-webkit-'); }
+	@-moz-keyframes @animation_name { .keyframes('-moz-'); }
+	@keyframes @animation_name { .keyframes; }
+
+	.keyframes(@prefixStr: '') {
+		@prefix: ~'@{prefixStr}';
+		2%  { @{prefix}transform: translate(1.5px, 2.5px) rotate(-0.5deg); }
+		4%  { @{prefix}transform: translate(1.5px, -1.5px) rotate(0.5deg); }
+		6%  { @{prefix}transform: translate(1.5px, -1.5px) rotate(-0.5deg); }
+		8%  { @{prefix}transform: translate(0.5px, 2.5px) rotate(0.5deg); }
+		10% { @{prefix}transform: translate(-0.5px, -0.5px) rotate(1.5deg); }
+		12% { @{prefix}transform: translate(-0.5px, -0.5px) rotate(-0.5deg); }
+		14% { @{prefix}transform: translate(2.5px, 0.5px) rotate(-0.5deg); }
+		16% { @{prefix}transform: translate(-1.5px, 1.5px) rotate(0.5deg); }
+		18% { @{prefix}transform: translate(2.5px, 0.5px) rotate(-0.5deg); }
+		20% { @{prefix}transform: translate(-1.5px, 0.5px) rotate(-0.5deg); }
+		22% { @{prefix}transform: translate(2.5px, -1.5px) rotate(-0.5deg); }
+		24% { @{prefix}transform: translate(1.5px, 2.5px) rotate(1.5deg); }
+		26% { @{prefix}transform: translate(-1.5px, -0.5px) rotate(0.5deg); }
+		28% { @{prefix}transform: translate(1.5px, 1.5px) rotate(-0.5deg); }
+		30% { @{prefix}transform: translate(2.5px, -1.5px) rotate(-0.5deg); }
+		32% { @{prefix}transform: translate(0.5px, 2.5px) rotate(-0.5deg); }
+		34% { @{prefix}transform: translate(-0.5px, 1.5px) rotate(1.5deg); }
+		36% { @{prefix}transform: translate(0.5px, 1.5px) rotate(1.5deg); }
+		38% { @{prefix}transform: translate(1.5px, 1.5px) rotate(0.5deg); }
+		40% { @{prefix}transform: translate(-0.5px, 1.5px) rotate(0.5deg); }
+		42% { @{prefix}transform: translate(-0.5px, 0.5px) rotate(1.5deg); }
+		44% { @{prefix}transform: translate(-1.5px, -1.5px) rotate(1.5deg); }
+		46% { @{prefix}transform: translate(0.5px, -0.5px) rotate(0.5deg); }
+		48% { @{prefix}transform: translate(-0.5px, 1.5px) rotate(-0.5deg); }
+		50% { @{prefix}transform: translate(2.5px, -0.5px) rotate(-0.5deg); }
+		52% { @{prefix}transform: translate(0.5px, -1.5px) rotate(0.5deg); }
+		54% { @{prefix}transform: translate(2.5px, -1.5px) rotate(0.5deg); }
+		56% { @{prefix}transform: translate(-1.5px, -0.5px) rotate(0.5deg); }
+		58% { @{prefix}transform: translate(-1.5px, 2.5px) rotate(1.5deg); }
+		60% { @{prefix}transform: translate(0.5px, -1.5px) rotate(0.5deg); }
+		62% { @{prefix}transform: translate(-0.5px, 2.5px) rotate(1.5deg); }
+		64% { @{prefix}transform: translate(0.5px, 0.5px) rotate(-0.5deg); }
+		66% { @{prefix}transform: translate(1.5px, -0.5px) rotate(1.5deg); }
+		68% { @{prefix}transform: translate(-1.5px, -0.5px) rotate(0.5deg); }
+		70% { @{prefix}transform: translate(-0.5px, 2.5px) rotate(1.5deg); }
+		72% { @{prefix}transform: translate(1.5px, 0.5px) rotate(0.5deg); }
+		74% { @{prefix}transform: translate(0.5px, -1.5px) rotate(0.5deg); }
+		76% { @{prefix}transform: translate(1.5px, 1.5px) rotate(-0.5deg); }
+		78% { @{prefix}transform: translate(2.5px, -1.5px) rotate(0.5deg); }
+		80% { @{prefix}transform: translate(-1.5px, 1.5px) rotate(0.5deg); }
+		82% { @{prefix}transform: translate(-0.5px, 2.5px) rotate(1.5deg); }
+		84% { @{prefix}transform: translate(1.5px, 1.5px) rotate(-0.5deg); }
+		86% { @{prefix}transform: translate(2.5px, 0.5px) rotate(1.5deg); }
+		88% { @{prefix}transform: translate(-0.5px, -1.5px) rotate(-0.5deg); }
+		90% { @{prefix}transform: translate(1.5px, -0.5px) rotate(-0.5deg); }
+		92% { @{prefix}transform: translate(0.5px, -1.5px) rotate(1.5deg); }
+		94% { @{prefix}transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
+		96% { @{prefix}transform: translate(-0.5px, -1.5px) rotate(-0.5deg); }
+		98% { @{prefix}transform: translate(-0.5px, -1.5px) rotate(1.5deg); }
+		0%, 100% { @{prefix}transform: translate(0, 0) rotate(0); }
+	}
+}

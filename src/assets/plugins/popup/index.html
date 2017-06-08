@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN" id="index">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimal-ui"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>弹出提示框</title>
+<link rel="stylesheet" href="css/common.css" />
+</head>
+<body>
+<form style="text-align: center; margin-top: 20px;">
+<input id="input" class="input" type="text" placeholder="请输入弹出内容" /><br/><br/>
+<input type="button" class="button" value="alert" onClick="popup.alert(this.form.input.value)" />
+<input type="button" class="button" value="confirm" onClick="popup.confirm(this.form.input.value)" />
+<input type="button" class="button" value="loading" onClick="popup.loading(this.form.input.value)" />
+<input type="button" class="button" value="done" onClick="popup.done(this.form.input.value)" />
+<input type="button" class="button" value="fail" onClick="popup.fail(this.form.input.value)" />
+<input type="button" class="button" value="message" onClick="popup.message(this.form.input.value)" />
+</form>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.animate.min.js"></script>
+<script src="js/popup.js"></script>
+<script>
+popup.setMaskEffect('BLUR');
+</script>
+</body>
+</html>

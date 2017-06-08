@@ -1,0 +1,15 @@
+{
+	"common": {
+        "hint": "Hint",
+        "ok": "Ok",
+        "cancel": "Cancel",
+        "loading": "Loading...",
+        "sending": "Sending...",
+        "iam": "I am"
+	},
+
+	"menu": {
+		"goToFoo": "Goto Foo",
+		"goToBar": "Goto Bar"
+	}
+}

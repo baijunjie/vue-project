@@ -1,0 +1,415 @@
+﻿* 使用方法
+popup.alert(123); // 输出123
+popup.alert({
+	msg: "你好",
+}); // 输出"你好"
+
+
+
+* API 说明
+
+/**
+ * alert 提示框
+ * @param  {String|Object} content     文本内容，或者一个配置对象
+ * @param  {Function}      beforeClose 可选。点击所有按钮后的回调。如果设置将会覆盖到配置对象的 beforeClose。
+ * @return {Box}                       返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.alert(content, onClick);
+
+/**
+ * confirm 选择框
+ * @param  {String|Object} content     文本内容，或者一个配置对象
+ * @param  {Function}      beforeClose 可选。点击所有按钮后的回调。如果设置将会覆盖到配置对象的 beforeClose。
+ * @return {Box}                       返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.confirm(content, onClick);
+
+/**
+ * loading 开启
+ * @param  {String|Object} content 文本内容，或者一个配置对象
+ * @return {Box}                   返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.loading(content);
+
+/**
+ * loading 结束
+ * @param  {Box} loadingBox 可选，一个 loading 类型的 box 对象，表示关闭该 loading。
+ */
+popup.loaded();
+
+/**
+ * loading 完成
+ * @param  {Box}           loadingBox 可选。一个 loading 类型的 box 对象，表示关闭该 loading。也可以直接传入 content，代表第二个参数。
+ * @param  {String|Object} content    可选。文本内容，或者一个配置对象。
+ * @return {Box}                      返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.done(content);
+
+/**
+ * loading 失败
+ * @param  {Box}           loadingBox 可选，一个 loading 类型的 box 对象，表示关闭该 loading。也可以直接传入 content，代表第二个参数。
+ * @param  {String|Object} content    可选，文本内容，或者一个配置对象。
+ * @return {Box}                      返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.fail(content);
+
+/**
+ * message 消息
+ * @param  {String|Object} content 文本内容，或者一个配置对象。
+ * @return {Box}                   返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+popup.message(content);
+
+/**
+ * 关闭 box
+ * 如果指定一个 box 对象，则直接关闭该 box。
+ * 如果指定一个类型，则优先关闭队列中最靠近尾部的同类型 box，否则关闭显示列表最靠近顶层的同类型 box。
+ * 如果没有传参，则关闭全部的 box。但是不会关闭 globalClose 为 false 的 box。
+ * @param  {Box|String} box 可选。一个 box 对象，或者 box 类型。
+ */
+popup.close(box);
+
+/**
+ * 通过 popup 调用各种类型的弹出组件
+ * @param  {Object} options 必须指明 type 属性，表示一个弹出组件类型
+ * @return {Box}            返回当前 box 对象，可以使用 box.close() 关闭当前 box。
+ */
+ popup(options);
+
+
+// 默认全局配置
+setGlobalOptions({
+	alert: {
+        title: '提示',
+        text: '', // 文本 内容。
+        html: '', // html 内容。
+        htmlFrom: null, // 表示 html 的来源容器。
+                        // 如果设置了来源容器，那么当弹出框关闭时，会将 html 内容放回来源容器。
+        button: ['好'],
+        className: '', // 为弹出对话框指定一个专有的类。
+        globalClose: true, // 是否允许被全局关闭。
+                        // 如果为 false，在使用 popup.colse() 时在没有明确传入 box 的情况下，不会被关闭。
+        queue: true, // 是否加入弹出队列，如果为 false，则直接显示。
+                    // alert、confirm 共享一个队列。
+                    // loading、done、fail 共享一个队列。
+                    // message 单独一个队列。
+        mask: true, // 是否显示遮罩。
+        showClose: false, // 是否显示关闭按钮。
+        open: noop, // 打开前执行的回调
+        beforeClose: noop, // 关闭前执行的回调
+        close: noop, // 关闭后执行的回调
+        in: { // 进入动画配置
+            start: {
+                'scale': 1.5,
+                'opacity': 0
+            },
+            end: {
+                'scale': 1,
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: { // 移出动画配置
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    },
+
+    confirm: {
+        title: '提示',
+        text: '',
+        html: '',
+        htmlFrom: null,
+        button: ['取消', '确定'],
+        className: '',
+        globalClose: true,
+        queue: true,
+        mask: true,
+        showClose: false,
+        open: noop,
+        beforeClose: noop,
+        close: noop,
+        in: {
+            start: {
+                'scale': 1.5,
+                'opacity': 0
+            },
+            end: {
+                'scale': 1,
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: {
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    },
+
+    loading: {
+        text: '',
+        className: '',
+        globalClose: true,
+        queue: true,
+        mask: false,
+        cover: false, // 是否遮盖页面。设置 false 后该 box 将不会阻挡鼠标与页面交互。
+        open: noop,
+        close: noop,
+        in: {
+            start: {
+                'opacity': 0
+            },
+            end: {
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: {
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    },
+
+    done: {
+        text: '',
+        className: '',
+        clickClose: true, // 是否支持点击关闭。
+        globalClose: true,
+        queue: true,
+        mask: false,
+        cover: false,
+        delay: 1000, // 存在延迟
+        open: noop,
+        close: noop,
+        in: {
+            start: {
+                'opacity': 0
+            },
+            end: {
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: {
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    },
+
+    fail: {
+        text: '',
+        className: '',
+        clickClose: true,
+        globalClose: true,
+        queue: true,
+        mask: false,
+        cover: false,
+        delay: 1000,
+        open: noop,
+        close: noop,
+        in: {
+            start: {
+                'opacity': 0
+            },
+            end: {
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: {
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    },
+
+    message: {
+        text: '',
+        className: '',
+        clickClose: true,
+        globalClose: true,
+        queue: true,
+        mask: false,
+        cover: false,
+        delay: 2000,
+        open: noop,
+        close: noop,
+        in: {
+            start: {
+                'opacity': 0
+            },
+            end: {
+                'opacity': 1
+            },
+            duration: 200,
+            easing: ''
+        },
+        out: {
+            start: {
+                'opacity': 1
+            },
+            end: {
+                'opacity': 0
+            },
+            duration: 200,
+            easing: ''
+        }
+    }
+});
+
+// 设置新的模板
+setGlobalOptions({
+    container: {
+        template: '<div id="popupLayer"></div>'
+    },
+
+    alert: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-header
+         * popup-header-text
+         * popup-text
+         * popup-html
+         * popup-button
+         * popup-button-text
+         * popup-footer
+         */
+        template: '\
+            <div class="popup-box popup-alert">\
+                <div class="popup-header popup-header-text"></div>\
+                <div class="popup-text"></div>\
+                <div class="popup-html"></div>\
+                <div class="popup-footer">\
+                    <div class="popup-button">\
+                        <span class="popup-button-text"></span>\
+                    </div>\
+                </div>\
+                <div class="popup-close"></div>\
+            </div>',
+        factory: boxFactory
+    },
+
+    confirm: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-header
+         * popup-header-text
+         * popup-text
+         * popup-html
+         * popup-button
+         * popup-button-text
+         * popup-footer
+         */
+        template: '\
+            <div class="popup-box popup-confirm">\
+                <div class="popup-header popup-header-text"></div>\
+                <div class="popup-text"></div>\
+                <div class="popup-html"></div>\
+                <div class="popup-footer">\
+                    <div class="popup-button popup-button-left">\
+                        <span class="popup-button-text"></span>\
+                    </div>\
+                    <div class="popup-button popup-button-right">\
+                        <span class="popup-button-text"></span>\
+                    </div>\
+                </div>\
+                <div class="popup-close"></div>\
+            </div>',
+        factory: boxFactory
+    },
+
+    loading: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-text
+         */
+        template: '\
+            <div class="popup-box popup-loading">\
+                <div class="popup-icon"></div>\
+                <div class="popup-text"></div>\
+            </div>',
+        factory: boxFactory
+    },
+
+    done: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-text
+         */
+        template: '\
+            <div class="popup-box popup-done">\
+                <div class="popup-icon"></div>\
+                <div class="popup-text"></div>\
+            </div>',
+        factory: boxFactory
+    },
+
+    fail: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-text
+         */
+        template: '\
+            <div class="popup-box popup-fail">\
+                <div class="popup-icon"></div>\
+                <div class="popup-text"></div>\
+            </div>',
+        factory: boxFactory
+    },
+
+    message: {
+        /**
+         * 模板必须包含以下标识类
+         * popup-text
+         */
+        template: '\
+            <div class="popup-box popup-message">\
+                <div class="popup-text"></div>\
+            </div>',
+        factory: boxFactory
+    }
+});
+
+
+// 设置效果
+// 目前只支持 0（正常效果） 和 1（模糊效果）两种
+popup.setBgEffect(1);
+// 或者在程序加载前定义全局变量
+var popupDefaultEffect = 1;
+
+
+
