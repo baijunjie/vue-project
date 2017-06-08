@@ -28,20 +28,20 @@ const parentComponent = {
 const slashStartReg = new RegExp('^/+');
 const slashEndReg = new RegExp('/+$');
 
-const router = new VueRouter();
+const router = Object.assign(new VueRouter(), {
+    setRoutes(routes) {
+        router.routes = toVueRoutes(routes);
+        router.matcher.addRoutes(router.routes);
+    },
 
-router.setRoutes = function(routes) {
-    router.routes = toVueRoutes(routes);
-    router.matcher.addRoutes(router.routes);
-};
+    getRoute(key, value) {
+        return findRoute(router.routes, key, value).meta;
+    },
 
-router.getRoute = function(key, value) {
-    return findRoute(router.routes, key, value).meta;
-};
-
-router.findRoute = findRoute;
-router.deleteRoute = deleteRoute;
-router.matchRoutes = matchRoutes;
+    findRoute,
+    deleteRoute,
+    matchRoutes
+});
 
 function toVueRoutes(routes, parentRoute) {
 
