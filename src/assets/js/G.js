@@ -2,8 +2,8 @@ import $ from 'jquery';
 import 'jquery.animate';
 export { $ };
 
-import * as tools from './tools.js';
-export { tools };
+import * as utils from './utils.js';
+export { utils };
 
 import api from './api.js';
 export { api };
