@@ -28,13 +28,19 @@ export function ajax(url, data, func) {
 	}
 
 	options = $.extend({
-		type: 'GET',
+		method: 'GET',
 		dataType: 'json',
 		contentType: 'application/json; charset=UTF-8',
 		xhrFields: {
 			withCredentials: true
 		}
 	}, options);
+
+    if (options.method.match(/post|put|patch/i)) {
+        try {
+            options.data = JSON.stringify(options.data);
+        } catch(err) {}
+    }
 
 	return $.ajax(options);
 }
