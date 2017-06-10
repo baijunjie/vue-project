@@ -17,17 +17,18 @@
 <script>
 import { popup } from 'G';
 
+const i18n = function() {
+    return this.$i18n.getLang('views.demo.foo');
+};
+
 export default {
     data() {
         return {
 
         };
     },
-
     computed: {
-        i18n() {
-            return this.$i18n.getLang('pages.demo.foo');
-        }
+        i18n
     },
 
     methods: {

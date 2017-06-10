@@ -1,11 +1,25 @@
 <template>
     <section class="home">
-        <p v-text="$t('pages.home.name')"></p>
+        <p v-text="i18n['name']"></p>
     </section>
 </template>
 
 <script>
-export default {};
+
+const i18n = function() {
+    return this.$i18n.getLang('views.home');
+};
+
+export default {
+    data() {
+        return {
+
+        };
+    },
+    computed: {
+        i18n
+    }
+};
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>

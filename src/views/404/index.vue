@@ -5,22 +5,24 @@
     </section>
 </template>
 <script>
+
+const i18n = function() {
+    return this.$i18n.getLang('views.404');
+};
+
 export default {
     data() {
         return {
 
         };
     },
-
     computed: {
-        i18n() {
-            return this.$i18n.getLang('pages.demo[404]');
-        }
+        i18n
     }
 };
 </script>
 <style lang="less" rel="stylesheet/less" scoped>
-@import "../../../assets/less/_config.less";
+@import "../../assets/less/_config.less";
 .title {
     text-align: center;
     line-height: 100px;

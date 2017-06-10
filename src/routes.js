@@ -1,29 +1,29 @@
 let home = {
-    i18n: 'pages.home.name',
+    i18n: 'views.home.name',
     name: 'home',
     path: '',
     redirect: function(to) {
         console.log(to);
     },
-    component: resolve => require(['@/pages/home'], resolve)
+    component: resolve => require(['@/views/home'], resolve)
 };
 
 let p404 = {
     name: '404',
     path: '/*',
-    component: resolve => require(['@/pages/demo/404'], resolve)
+    component: resolve => require(['@/views/404'], resolve)
 };
 
 let foo = {
     i18n: 'menu.goToFoo',
     name: 'foo',
-    component: resolve => require(['@/pages/demo/foo'], resolve)
+    component: resolve => require(['@/views/demo/foo'], resolve)
 };
 
 let bar = {
     i18n: 'menu.goToBar',
     name: 'bar',
-    component: resolve => require(['@/pages/demo/bar'], resolve)
+    component: resolve => require(['@/views/demo/bar'], resolve)
 };
 
 // 定义页面之间的父子关系

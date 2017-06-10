@@ -11,11 +11,18 @@
 <script>
 import PhotoClip from 'photoclip';
 
+const i18n = function() {
+    return this.$i18n.getLang('views.demo.bar');
+};
+
 export default {
     data() {
         return {
-            i18n: this.$i18n.getLang('pages.demo.bar')
+
         };
+    },
+    computed: {
+        i18n
     },
     mounted () {
         new PhotoClip('#clipArea', {
