@@ -5,25 +5,25 @@ let home = {
     redirect: function(to) {
         console.log(to);
     },
-    component: resolve => require(['@/pages/home/home'], resolve)
+    component: resolve => require(['@/pages/home'], resolve)
 };
 
 let p404 = {
     name: '404',
     path: '/*',
-    component: resolve => require(['@/pages/demo/404/404'], resolve)
+    component: resolve => require(['@/pages/demo/404'], resolve)
 };
 
 let foo = {
     i18n: 'menu.goToFoo',
     name: 'foo',
-    component: resolve => require(['@/pages/demo/foo/foo'], resolve)
+    component: resolve => require(['@/pages/demo/foo'], resolve)
 };
 
 let bar = {
     i18n: 'menu.goToBar',
     name: 'bar',
-    component: resolve => require(['@/pages/demo/bar/bar'], resolve)
+    component: resolve => require(['@/pages/demo/bar'], resolve)
 };
 
 // 定义页面之间的父子关系
