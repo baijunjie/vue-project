@@ -93,7 +93,7 @@ function checkLangType(langType, obj) {
 // 并将第二个参数及之后参数传递给 callback
 function execCallbak(type) {
     let args = Array.prototype.slice.call(arguments, 1);
-    callbackSet[type].forEach(function(cb) {
+    callbackSet[type].concat().forEach(function(cb) {
         cb.apply(i18n, args);
     });
 }
