@@ -1,9 +1,9 @@
 var gulp = require('gulp'),
-	i18n = require('gulp-i18n-combine'),
-	clean = require('gulp-clean');
+    clean = require('gulp-clean'),
+	i18n = require('gulp-i18n-combine');
 
-var distPath = '../static/data/i18n/',
-	srcPath = '../src/**/*-*.json';
+var srcPath = '../src/**/*-*.json',
+    distPath = '../static/data/i18n/';
 
 gulp.task('i18nClean', function () {
 	return gulp.src(distPath, { read: false })
