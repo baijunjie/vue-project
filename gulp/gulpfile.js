@@ -17,7 +17,7 @@ gulp.task('i18n', ['i18nClean'], function () {
 });
 
 // 监听文件修改
-gulp.task('i18nWatch', function () {
+gulp.task('i18nWatch', ['i18n'], function () {
 	gulp.watch(srcPath, ['i18n']);
 });
 

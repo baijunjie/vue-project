@@ -15,17 +15,17 @@ export function ajax(url, data, func) {
 		options = url;
 	} else {
 		options = { url: url };
-
-		if ($.isFunction(data)) {
-			options.success = data;
-		} else if (data) {
-			options.data = data;
-
-			if ($.isFunction(func)) {
-				options.success = func;
-			}
-		}
 	}
+
+    if ($.isFunction(data)) {
+        options.success = data;
+    } else if (data) {
+        options.data = data;
+
+        if ($.isFunction(func)) {
+            options.success = func;
+        }
+    }
 
 	options = $.extend({
 		method: 'GET',
@@ -52,17 +52,17 @@ export function http(url, data, func) {
 		options = url;
 	} else {
 		options = { url: url };
-
-		if ($.isFunction(data)) {
-			options.success = data;
-		} else if (data) {
-			options.data = data;
-
-			if ($.isFunction(func)) {
-				options.success = func;
-			}
-		}
 	}
+
+    if ($.isFunction(data)) {
+        options.success = data;
+    } else if (data) {
+        options.data = data;
+
+        if ($.isFunction(func)) {
+            options.success = func;
+        }
+    }
 
 	if (!options.method && options.type) {
 		options.method = options.type;
