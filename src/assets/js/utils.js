@@ -231,6 +231,41 @@ export function textWrapToHtml(text) {
     return typeof text === 'string' ? text.replace(/\n|\r/g, '<br/>') : '';
 }
 
+// 获取本地存储数据
+export function getStorage(key) {
+    let value = localStorage.getItem(key);
+    try {
+        value = JSON.parse(value);
+    } catch(err) {}
+    return value;
+}
+// 本地存储数据
+export function setStorage(key, vlaue) {
+    if (typeof vlaue === 'object') {
+        vlaue = JSON.stringify(vlaue);
+    }
+    return localStorage.setItem(key, vlaue);
+}
+// 移除本地存储数据
+export function removeStorage(key) {
+    return localStorage.removeItem(key);
+}
+
+// Session timeout validate
+export function sessionTimeoutValidate(key) {
+    let validTime = 8.64e7;
+
+    let data = getStorage(key);
+    if (data &&
+        data.createDate &&
+        data.createDate + validTime > Date.now() ) {
+        return data;
+    } else {
+        removeStorage(key);
+        return null;
+    }
+}
+
 // 打印log (用于过滤 vue 生成的 getter、setter)
 export function log() {
 	let args = [];
