@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-@import "../../../assets/less/_config.less";
+@import '~less-lib';
 .bar {
     margin: 0;
     text-align: center;

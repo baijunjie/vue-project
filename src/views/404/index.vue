@@ -22,7 +22,7 @@ export default {
 };
 </script>
 <style lang="less" rel="stylesheet/less" scoped>
-@import "../../assets/less/_config.less";
+@import '~less-lib';
 .title {
     text-align: center;
     line-height: 100px;

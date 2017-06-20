@@ -30,7 +30,11 @@ export default {
 </script>
 
 <style lang="less" rel="stylesheet/less">
-@import "./assets/less/styles.less";
+@import './assets/less/styles.less';
+
+@header_height: 60px;  // 头部高度
+@nav_width: 200px;  // 左侧导航宽度
+@breadcrumb: 30px; // 面包屑高度
 
 html, body {
     height: 100%;

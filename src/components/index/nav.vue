@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-@import "../../assets/less/_config.less";
+@import '~less-lib';
 
 .nav {
     line-height: 30px;
