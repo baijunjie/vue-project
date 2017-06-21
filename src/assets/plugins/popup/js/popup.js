@@ -11,7 +11,7 @@
     } else if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
     } else {
-        window.popup = factory(root.jQuery);
+        root.popup = factory(root.jQuery);
     }
 
 }(this, function($) {
@@ -586,13 +586,6 @@
             if (loadingBox.type === 'loading' && loadingBox.queue) {
                 index = loadingBox.queue.indexOf(loadingBox);
             }
-        } else {
-            $.each(loadQueue, function(i, box) {
-                if (box.type === 'loading') {
-                    index = i;
-                    return false;
-                }
-            });
         }
 
         return index;

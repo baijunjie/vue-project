@@ -71,6 +71,10 @@ agent-base@2:
     extend "~3.0.0"
     semver "~5.0.1"
 
+ajax-require@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ajax-require/-/ajax-require-1.0.2.tgz#ed70b08171fa1e57f9ac908a96586ffd6c75fd52"
+
 ajv-keywords@^1.0.0, ajv-keywords@^1.1.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"

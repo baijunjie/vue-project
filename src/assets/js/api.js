@@ -7,7 +7,7 @@ let host = {
 
 function getHost(alias) {
     alias = alias || env;
-    return host[alias] ? host[alias] : host['default'];
+    return host[alias] || host['default'];
 }
 
 export default {

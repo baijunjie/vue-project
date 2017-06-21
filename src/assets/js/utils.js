@@ -279,5 +279,5 @@ export function log() {
 	console.log.apply(console, args);
 }
 
-import ajaxRequire from './lib/ajaxRequire.js';
+import ajaxRequire from 'ajax-require';
 export { ajaxRequire };
