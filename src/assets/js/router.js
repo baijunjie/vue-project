@@ -30,8 +30,8 @@ const slashEndReg = new RegExp('/+$');
 
 const router = Object.assign(new VueRouter(), {
     setRoutes(routes) {
-        router.routes = toVueRoutes(routes);
-        router.matcher.addRoutes(router.routes);
+        router.routes = initRoutes(routes);
+        router.matcher.addRoutes(toVueRoutes(router.routes));
     },
 
     getRoute(key, value) {
@@ -43,9 +43,8 @@ const router = Object.assign(new VueRouter(), {
     matchRoutes
 });
 
-function toVueRoutes(routes, parentRoute) {
-
-    routes.forEach(function(route) {
+function initRoutes(routes, parentRoute) {
+    return routes.map(function(route) {
         route.parent = parentRoute;
 
         if (!route.component) {
@@ -56,12 +55,8 @@ function toVueRoutes(routes, parentRoute) {
             route.path = route.name;
         }
 
-        // 在递归中过滤掉创建的默认子路由
-        if (!route.meta) {
-            route.meta = route;
-            route.path = route.path || '';
-
-            if (parentRoute && !slashStartReg.test(route.path)) {
+        if (typeof route.path === 'string') {
+           if (parentRoute && !slashStartReg.test(route.path)) {
                 // 处理相对路径
                 route.path = parentRoute.path.replace(slashEndReg, '') + '/' + route.path.replace(slashStartReg, '');
             } else {
@@ -70,22 +65,41 @@ function toVueRoutes(routes, parentRoute) {
         }
 
         if (route.children && route.children.length) {
-            if (route.component) {
-                route.children.unshift({
-                    meta: route,
-                    name: route.name,
+            route.children = initRoutes(route.children, route);
+        }
+
+        return route;
+    });
+}
+
+function toVueRoutes(routes) {
+    return routes.map(function(route) {
+        let vueRoute = Object.assign({}, route);
+
+        // 在递归中过滤掉创建的默认子路由
+        if (!vueRoute.meta) {
+            vueRoute.meta = route;
+        }
+
+        if (vueRoute.children && vueRoute.children.length) {
+            let children = Object.assign([], vueRoute.children);
+
+            if (vueRoute.component) {
+                children.unshift({
+                    meta: vueRoute.meta,
+                    name: vueRoute.name,
                     path: '',
-                    component: route.component
+                    component: vueRoute.component
                 });
-                delete route.name;
+                delete vueRoute.name;
             }
 
-            route.component = parentComponent;
-            route.children = toVueRoutes(route.children, route);
+            vueRoute.component = parentComponent;
+            vueRoute.children = toVueRoutes(children);
         }
-    });
 
-    return routes;
+        return vueRoute;
+    });
 }
 
 function findRoute(routes, key, value) {
@@ -114,7 +128,7 @@ function deleteRoute(routes, key, value) {
 }
 
 function matchRoutes(routeInfo) {
-    let route = routeInfo.meta;
+    let route = routeInfo.meta || routeInfo;
     let matched = [route];
 
     while (route.parent) {

@@ -2,9 +2,6 @@ let home = {
     i18n: 'views.home.name',
     name: 'home',
     path: '',
-    redirect: function(to) {
-        console.log(to);
-    },
     component: resolve => require(['@/views/home'], resolve)
 };
 
