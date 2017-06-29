@@ -18,6 +18,7 @@
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import pathToRegexp from 'path-to-regexp';
 
 Vue.use(VueRouter);
 
@@ -105,7 +106,9 @@ function toVueRoutes(routes) {
 function findRoute(routes, key, value) {
     let targetRoute;
     routes.some(route => {
-        if (route[key] === value) {
+        if (route[key] === value ||
+            key === 'path' &&
+            pathToRegexp(route[key]).exec(value)) {
             return targetRoute = route;
         } else if (route.children && route.children.length) {
             return targetRoute = findRoute(route.children, key, value);
@@ -117,7 +120,9 @@ function findRoute(routes, key, value) {
 function deleteRoute(routes, key, value) {
     let targetRoute;
     routes.some((route, i) => {
-        if (route[key] === value) {
+        if (route[key] === value ||
+            key === 'path' &&
+            pathToRegexp(route[key]).exec(value)) {
             routes.splice(i, 1);
             return targetRoute = route;
         } else if (route.children && route.children.length) {
