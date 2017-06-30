@@ -1,7 +1,3 @@
-import $ from 'jquery';
-import 'jquery.animate';
-export { $ };
-
 import * as utils from './utils.js';
 export { utils };
 
