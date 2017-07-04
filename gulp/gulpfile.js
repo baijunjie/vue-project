@@ -21,4 +21,4 @@ gulp.task('i18nWatch', ['i18n'], function () {
 	gulp.watch(srcPath, ['i18n']);
 });
 
-gulp.task('default', ['i18n']);
+gulp.task('default', ['i18nWatch']);

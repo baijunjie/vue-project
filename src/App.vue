@@ -40,10 +40,6 @@ html, body {
     height: 100%;
 }
 
-#mainBody {
-    height: 100%;
-}
-
 #mainHeader {
     position: fixed;
     top: 0;

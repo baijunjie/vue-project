@@ -1,41 +1,34 @@
 <template>
     <section class="foo">
-        <p class="title" v-text="$t('common.iam') + ' ' + i18n['name']"></p>
+        <p class="title" v-text="$t('common.iam') + ' ' + T('name')"></p>
         <div class="demo">
             <h1>Element UI</h1>
             <br/>
-            <el-button>{{i18n['defaultBtn']}}</el-button>
-            <el-button type="primary">{{i18n['primaryBtn']}}</el-button>
+            <el-button>{{T('defaultBtn')}}</el-button>
+            <el-button type="primary">{{T('primaryBtn')}}</el-button>
             <el-button type="primary" :loading="true">{{$t('common.loading')}}</el-button>
-            <el-button type="text">{{i18n['textBtn']}}</el-button>
+            <el-button type="text">{{T('textBtn')}}</el-button>
             <br/>
             <br/>
-            <el-button @click="submit">{{i18n['touchMe']}}</el-button>
+            <el-button @click="submit">{{T('touchMe')}}</el-button>
         </div>
     </section>
 </template>
 <script>
 import { popup } from 'G';
 
-const i18n = function() {
-    return this.$i18n.getLang('views.demo.foo');
-};
-
 export default {
     data() {
         return {
-
+            T: this.$i18n.getT('views.demo.foo')
         };
-    },
-    computed: {
-        i18n
     },
 
     methods: {
         submit() {
             var box = popup({
                 type: 'confirm',
-                text: this.i18n['submitForm'],
+                text: this.T('submitForm', { msg: 'Test' }),
                 beforeClose: (num, elem, done) => {
                     if (num == 1) {
                         box.vm.loading = true;

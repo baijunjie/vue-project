@@ -1,19 +1,20 @@
 /**
- * Vue 国际化 v0.2.4
+ * Vue 国际化 v0.3.0
  * @author Junjie.Bai
  *
  * i18n  返回一个 VueI18n 的实例对象，扩展了几个方法。
  *
  * 方法：
- * - getLang             获取当前语言。
- * - setLang             设置当前语言。
- * - getAllLang          获取全部语言对象。
- * - setAllLang          设置全部语言对象。
- * - getLangType         获取当前语言类型。
- * - setLangType         设置当前语言类型。
- * - config              设置配置对象。
- * - on                  注册事件监听。
- * - off                 移除事件监听。
+ * - getLang          获取当前语言。
+ * - setLang          设置当前语言。
+ * - getAllLang       获取全部语言对象。
+ * - setAllLang       设置全部语言对象。
+ * - getLangType      获取当前语言类型。
+ * - setLangType      设置当前语言类型。
+ * - getT             获取语言转换器。
+ * - config           设置配置对象。
+ * - on               注册事件监听。
+ * - off              移除事件监听。
  *
  * 事件：
  * - requireLangDone  新语言包加载完成时触发该事件，并将该语言类型作为参数传入。
@@ -59,6 +60,7 @@ let callbackSet = {
         setAllLang,
         getLangType,
         setLangType,
+        getT,
         config,
         on,
         off
@@ -245,6 +247,19 @@ function setLangType(langType) {
     });
 
     return promise;
+}
+
+/**
+ * 获取语言转换器
+ * @param  {String}   path  传入语言 key 的父级路径
+ * @return {Function}       返回一个转换函数，功能和 i18n.t 相同，但不需要再输入父级路径
+ */
+function getT(path) {
+    return function(key) {
+        let args = Array.prototype.splice.call(arguments, 1);
+        args.unshift(path + '.' + key);
+        return i18n.t.apply(i18n, args);
+    };
 }
 
 /**

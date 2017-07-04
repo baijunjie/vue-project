@@ -4,5 +4,5 @@
     "primaryBtn": "Primary button",
     "textBtn": "Text button",
     "touchMe": "Touch me!",
-    "submitForm": "Submit form"
+    "submitForm": "Submit form: {msg}"
 }

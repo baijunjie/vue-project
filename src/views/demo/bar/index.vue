@@ -1,6 +1,6 @@
 <template>
     <section class="bar">
-        <p v-text="$t('common.iam') + ' ' + i18n['name']"></p>
+        <p v-text="$t('common.iam') + ' ' + T('name')"></p>
         <div id="clipArea"></div>
         <input type="file" id="file">
         <button id="clipBtn">截取</button>
@@ -11,18 +11,11 @@
 <script>
 import PhotoClip from 'photoclip';
 
-const i18n = function() {
-    return this.$i18n.getLang('views.demo.bar');
-};
-
 export default {
     data() {
         return {
-
+            T: this.$i18n.getT('views.demo.bar')
         };
-    },
-    computed: {
-        i18n
     },
     mounted () {
         new PhotoClip('#clipArea', {
