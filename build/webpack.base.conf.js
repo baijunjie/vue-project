@@ -10,7 +10,20 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+
+    vendor: [
+      'jquery',
+      'jquery.animate',
+      'lodash',
+      'moment',
+      'path-to-regexp',
+      'vue',
+      'vue-i18n',
+      'vue-resource',
+      'vue-router',
+      'vuex',
+    ]
   },
   output: {
     path: config.build.assetsRoot,
