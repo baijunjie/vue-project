@@ -7,18 +7,10 @@ Vue.config.productionTip = false;
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
-// UI 框架
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-default/index.css';
-Vue.use(ElementUI);
-
 // 路由
 import router from '@/assets/js/router';
 import routes from '@/routes';
 router.setRoutes(routes);
-
-import '@/assets/js/patch';
-import App from '@/App';
 
 // 国际化
 import i18n from '@/assets/js/i18n';
@@ -34,6 +26,29 @@ i18n.on('change', function(langType) {
 });
 
 i18n.setLangType('zh-CN');
+
+// UI 框架
+import ElementUI from 'element-ui';
+import ELUI_ZHCN from 'element-ui/lib/locale/lang/zh-CN';
+import ELUI_EN from 'element-ui/lib/locale/lang/en';
+import 'element-ui/lib/theme-default/index.css';
+Vue.use(ElementUI, {
+    i18n: key => i18n.t(key)
+});
+
+i18n.on('requireLangDone', langType => {
+    switch (langType) {
+    case 'zh-CN':
+        i18n.setAllLang(langType, ELUI_ZHCN);
+        break;
+    case 'en-US':
+        i18n.setAllLang(langType, ELUI_EN);
+        break;
+    }
+});
+
+import '@/assets/js/patch';
+import App from '@/App';
 
 i18n.on('ready', function(langType) {
     /* eslint-disable no-new */

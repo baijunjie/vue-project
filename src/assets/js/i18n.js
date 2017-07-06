@@ -1,5 +1,5 @@
 /**
- * Vue 国际化 v0.3.0
+ * Vue 国际化 v0.3.1
  * @author Junjie.Bai
  *
  * i18n  返回一个 VueI18n 的实例对象，扩展了几个方法。
@@ -80,7 +80,7 @@ config({
 function checkLangType(langType, obj) {
     if (cfg.caseSensitive) {
         return obj[langType] ? langType : false;
-    } {
+    } else {
         let reg = new RegExp('^' + langType + '$', 'i');
         for (langType in obj) {
             if (reg.test(langType)) {
@@ -106,15 +106,16 @@ function execCallbak(type) {
  * @return {String|Object}      返回当前语言类型下 key 的对应值。如果没有传参，则返回当前语言字典对象。
  */
 function getLang(key) {
-    let langType = isReady ? i18n.locale : cfg.defLangType;
+    let langType = isReady ? i18n.locale : '';
     let langDict = i18n.messages[langType];
+
     if (key === undefined) {
         return extend(true, {}, langDict);
     } else if (langDict) {
         let returnValue;
         if (returnValue = langDict[key]) {
             return returnValue;
-        } else if (returnValue = eval('langDict.' + key)) {
+        } else if (returnValue = getValue(langDict, key)) {
             return returnValue;
         }
     }
@@ -127,7 +128,7 @@ function getLang(key) {
  * @param {String|Object} value  传入 key 对应的 value。
  */
 function setLang(key, value) {
-    let langType = isReady ? i18n.locale : cfg.defLangType;
+    let langType = isReady ? i18n.locale : '';
     if (!langType) return;
 
     let langDict;
@@ -135,10 +136,10 @@ function setLang(key, value) {
         langDict = key;
     } else {
         langDict = {};
-        langDict[key] = value;
+        setValue(langDict, key, value);
     }
 
-    i18n.messages[langType] = extend(true, i18n.messages[langType], langDict);
+    i18n.setLocaleMessage(langType, extend(true, i18n.messages[langType], langDict));
 
     return i18n;
 }
@@ -176,7 +177,7 @@ function setAllLang(langType, langDict) {
         if (!(langTypeExsit = checkLangType(langType, i18n.messages))) {
             langTypeExsit = langType;
         }
-        i18n.messages[langTypeExsit] = extend(i18n.messages[langTypeExsit], newLangSet[langType]);
+        i18n.setLocaleMessage(langTypeExsit, extend(i18n.messages[langTypeExsit], newLangSet[langType]));
     }
 
     return i18n;
@@ -205,7 +206,7 @@ function setLangType(langType) {
 
         if (isReady && langType === i18n.locale) return resolve();
 
-        if (i18n.messages[langType]) {
+        if (langTypeExsit) {
             i18n.locale = langType;
             return resolve();
 
@@ -222,8 +223,6 @@ function setLangType(langType) {
                     }
                 })
                 .then(function(json) {
-                    execCallbak('requireLangDone', langType);
-
                     i18n.setLocaleMessage(langType, json);
                     i18n.locale = langType;
 
@@ -233,6 +232,7 @@ function setLangType(langType) {
                         delete callbackSet['ready'];
                     }
 
+                    execCallbak('requireLangDone', langType);
                     resolve('requireLangDone');
                 })
                 .catch(function(error) {
@@ -416,6 +416,65 @@ function extend() {
 
     // Return the modified object
     return target;
+}
+
+// 设置对象的值
+// 例如：
+//   setValue(obj, 'a.b.c', 100) => obj.a.b.c === 100
+//   setValue(obj, '', { a: 100 }) => obj.a === 100
+function setValue(obj, key, value) {
+    if (!key) {
+        if (typeof value === 'object') {
+            $.extend(obj, value);
+        }
+        return;
+    }
+
+    var reg = /(\[[^\.]*)(\.+)([^\.]*\])/g, // 匹配 a.b['a.b'] 中的 ['a.b']
+        reg2 = /(.+)\[(.+)\]/, // 匹配 a[b] 中的 a 和 b
+        reg3 = /^['"](.+)['"]$/; // 匹配 'b' 中的 b
+
+    key = key.replace(reg, function(x, $1, $2, $3) {
+        return $1 + $2.replace(/\./g, '\n') + $3;
+    });
+
+    var lastObj = obj,
+        arr = key.split('.');
+
+    for (var i = 0, l = arr.length, n; n = arr[i++];) {
+        n = n.replace(/\n/g, '.');
+        var res = reg2.exec(n),
+            prop = res ? res[1] : n;
+
+        if (res) {
+            var sub = res[2],
+                res2 = reg3.exec(sub),
+                sub = res2 ? res2[1] : sub,
+                isArr = !res2 && sub == parseInt(sub);
+
+            lastObj = lastObj[prop] = lastObj[prop] || (isArr ? [] : {});
+            prop = sub;
+        }
+
+        if (i === l) {
+            lastObj[prop] = value;
+        } else {
+            lastObj = lastObj[prop] = lastObj[prop] || {};
+        }
+    }
+}
+
+// 获取对象的值
+// 例如：
+//   getValue(obj, 'a.b.c') => 100
+//   getValue(obj, '') => undefined
+function getValue(obj, key) {
+    if (!key) return undefined;
+    try {
+        return eval('obj' + (key.indexOf('[') === 0 ? '' : '.') + key);
+    } catch(err) {
+        return undefined;
+    }
 }
 
 export default i18n;
