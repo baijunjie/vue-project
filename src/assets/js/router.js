@@ -1,5 +1,5 @@
 /**
- * Vue Router 扩展
+ * Vue Router 扩展 0.1.0
  * @author Junjie.Bai
  *
  * router  返回一个 VueRouter 的实例对象，扩展了以下方法与属性。
@@ -30,19 +30,21 @@ const slashStartReg = new RegExp('^/+');
 const slashEndReg = new RegExp('/+$');
 
 const router = Object.assign(new VueRouter(), {
-    setRoutes(routes) {
-        router.routes = initRoutes(routes);
-        router.matcher.addRoutes(toVueRoutes(router.routes));
-    },
-
-    getRoute(key, value) {
-        return findRoute(router.routes, key, value).meta;
-    },
-
+    setRoutes,
+    getRoute,
     findRoute,
     deleteRoute,
     matchRoutes
 });
+
+function setRoutes(routes) {
+    router.routes = initRoutes(routes);
+    router.matcher.addRoutes(toVueRoutes(router.routes));
+}
+
+function getRoute(key, value) {
+    return findRoute(router.routes, key, value).meta;
+}
 
 function initRoutes(routes, parentRoute) {
     return routes.map(function(route) {
