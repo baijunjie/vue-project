@@ -2,7 +2,8 @@ let env = 'dev';
 
 let host = {
     'default': 'http://localhost',
-    'dev': 'http://localhost'
+    'dev': 'http://localhost',
+    'pro': 'http://localhost'
 };
 
 function getHost(alias) {
