@@ -8,7 +8,11 @@
     }],
     "stage-2"
   ],
-  "plugins": [],
+  "plugins": [
+    ["component", [
+      { "libraryName": "element-ui", "styleLibraryName": "theme-default" }
+    ]]
+  ],
   "env": {
     "test": {
       "presets": ["env", "stage-2"],

@@ -12,5 +12,5 @@ function getHost(alias) {
 }
 
 export default {
-    getUseList: getHost() + '/api/getUseList'
+    getHost
 };

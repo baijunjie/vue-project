@@ -31,7 +31,6 @@ i18n.setLangType('zh-CN');
 import ElementUI from 'element-ui';
 import ELUI_ZHCN from 'element-ui/lib/locale/lang/zh-CN';
 import ELUI_EN from 'element-ui/lib/locale/lang/en';
-import 'element-ui/lib/theme-default/index.css';
 Vue.use(ElementUI, {
     i18n() {
         return i18n.t.apply(i18n, arguments);
