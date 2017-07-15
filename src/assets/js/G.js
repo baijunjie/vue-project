@@ -1,9 +1,6 @@
 import * as utils from './utils.js';
 export { utils };
 
-import api from './api.js';
-export { api };
+export { default as api } from './api.js';
 
-import popup from '../plugins/popup/js/popup.js';
-export { popup };
-
+export { default as popup } from '../plugins/popup/js/popup.js';

@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import $ from 'jquery';
 
 /**
  * json 请求的 AJAX 封装
@@ -229,6 +228,12 @@ export function findSameValueOfObjectFromArray(arr, key, value) {
 // 将字符串替换为 <br/>
 export function textWrapToHtml(text) {
     return typeof text === 'string' ? text.replace(/\n|\r/g, '<br/>') : '';
+}
+
+// 退出登录
+export function logout() {
+    removeStorage('userData');
+    location.reload();
 }
 
 // 获取本地存储数据
