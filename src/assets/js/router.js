@@ -87,17 +87,20 @@ function toVueRoutes(routes) {
         if (vueRoute.children && vueRoute.children.length) {
             let children = Object.assign([], vueRoute.children);
 
-            if (vueRoute.component) {
-                children.unshift({
-                    meta: vueRoute.meta,
-                    name: vueRoute.name,
-                    path: '',
-                    component: vueRoute.component
-                });
-                delete vueRoute.name;
+            if (!vueRoute.nesting) {
+                if (vueRoute.component) {
+                    children.unshift({
+                        meta: vueRoute.meta,
+                        name: vueRoute.name,
+                        path: '',
+                        component: vueRoute.component
+                    });
+                    delete vueRoute.name;
+                }
+
+                vueRoute.component = parentComponent;
             }
 
-            vueRoute.component = parentComponent;
             vueRoute.children = toVueRoutes(children);
         }
 
