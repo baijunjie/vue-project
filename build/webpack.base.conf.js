@@ -2,6 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
+var pkg = require('../package.json')
 var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
@@ -11,19 +12,7 @@ function resolve (dir) {
 module.exports = {
   entry: {
     app: './src/main.js',
-
-    vendor: [
-      'jquery',
-      'jquery.animate',
-      'lodash',
-      'moment',
-      'path-to-regexp',
-      'vue',
-      'vue-i18n',
-      'vue-resource',
-      'vue-router',
-      'vuex',
-    ]
+    vendor: Object.keys(pkg.dependencies)
   },
   output: {
     path: config.build.assetsRoot,
