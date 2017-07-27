@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/assets/js/lib/ajaxRequire.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">all files</a> / <a href="index.html">src/assets/js/lib/</a> ajaxRequire.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.54% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/78</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.82% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">23.08% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.84% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/76</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function(root, factory) {
+	'use strict';
+&nbsp;
+	<span class="missing-if-branch" title="else path not taken" >E</span>if (typeof module === 'object' &amp;&amp; typeof exports === 'object') {
+		module.exports = factory(require('jquery'));
+	} else <span class="cstat-no" title="statement not covered" >if (typeof define === 'function' &amp;&amp; define.amd) {</span>
+<span class="cstat-no" title="statement not covered" >		define(['jquery'], factory);</span>
+	} else {
+<span class="cstat-no" title="statement not covered" >		root.bjj = root.bjj || {};</span>
+<span class="cstat-no" title="statement not covered" >		root.bjj.ajaxRequire = factory(root.jQuery);</span>
+	}
+&nbsp;
+}(this, function($) {
+	'use strict';
+&nbsp;
+	var ajax,
+		returnValueSet = {}, // 以请求的 url 为 key, 缓存所有请求返回值的集合
+		checkRequireDataSet = {}; // 以请求的 url 为 key, 值为所有依赖该 url 的请求在进行 checkRequireArray 时所需的变量集合所组成的数组
+&nbsp;
+	/**
+	 * ajax 请求队列
+	 * @param  {String | Object | Array} reqArr         所有请求的 url 组成的数组。
+	 *                                                  如果是单个请求，可直接传入 url 字符串。
+	 *                                                  如果请求需要配置具体的 ajax 参数，则传入一个配置对象。对象参数详见 jQuery.ajax() 的参数文档。
+	 *                                                  如果是多个请求，则传入这些请求 url 字符串或者 ajax 配置对象所组成的数组。
+	 * @param  {Function}                callback       所有 Ajax 请求就绪后的回调
+	 * @param  {Function}                errorCallback  Ajax 请求失败后的回调，会将 url 作为参数传入。如果该参数传入一个对象，则会被视为 globalParams。
+	 * @param  {Object}                  globalParams   全局 Ajax 配置参数，默认应用在该次调用的所有 ajax 请求上，但会被每个 ajax 请求单独配置的参数覆盖。
+	 */
+	function ajaxRequire(reqArr, callback, errorCallback, globalParams) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >		if (!$.isArray(reqArr)) {</span>
+<span class="cstat-no" title="statement not covered" >			reqArr = [reqArr];</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		if ($.isPlainObject(errorCallback)) {</span>
+<span class="cstat-no" title="statement not covered" >			globalParams = errorCallback;</span>
+<span class="cstat-no" title="statement not covered" >			errorCallback = null;</span>
+		}
+&nbsp;
+		var returnValueArr = <span class="cstat-no" title="statement not covered" >[],</span>
+			def = <span class="cstat-no" title="statement not covered" >new $.Deferred();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		$.each(reqArr, function(i, url) <span class="fstat-no" title="function not covered" >{</span></span>
+			var params = <span class="cstat-no" title="statement not covered" >$.extend({}, globalParams);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			if ($.isPlainObject(url)) {</span>
+<span class="cstat-no" title="statement not covered" >				$.extend(params, url);</span>
+			} else {
+<span class="cstat-no" title="statement not covered" >				params.url = url;</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			url = composeUrl(params.url, params.data);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			if (params.cache !== false &amp;&amp; returnValueSet[url]) {</span>
+<span class="cstat-no" title="statement not covered" >				returnValueArr[i] = returnValueSet[url];</span>
+<span class="cstat-no" title="statement not covered" >				delete reqArr[i];</span>
+<span class="cstat-no" title="statement not covered" >				checkRequireArray(reqArr, returnValueArr, callback, def);</span>
+<span class="cstat-no" title="statement not covered" >				return;</span>
+			}
+&nbsp;
+			var checkRequireData = <span class="cstat-no" title="statement not covered" >{</span>
+				index: i,
+				reqArr: reqArr,
+				returnValueArr: returnValueArr,
+				callback: callback,
+				errorCallback: errorCallback
+			};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			if ($.isArray(checkRequireDataSet[url])) {</span>
+				// 检查请求集合中存在该 url，表示已经发出 ajax 请求
+				// 这里只将需要检查的请求数据加入到集合中，然后返回
+<span class="cstat-no" title="statement not covered" >				checkRequireDataSet[url].push(checkRequireData);</span>
+<span class="cstat-no" title="statement not covered" >				return;</span>
+			} else {
+				// 检查请求集合中不存在该 url，表示还未发出 ajax 请求
+				// 这里将需要检查的请求数据加入到集合中，然后开始 ajax 请求
+<span class="cstat-no" title="statement not covered" >				checkRequireDataSet[url] = [checkRequireData];</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			ajax(params, function(returnValue) <span class="fstat-no" title="function not covered" >{</span></span>
+<span class="cstat-no" title="statement not covered" >				returnValueSet[url] = returnValue;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >				$.each(checkRequireDataSet[url], function(i, data) <span class="fstat-no" title="function not covered" >{</span></span>
+					var index = <span class="cstat-no" title="statement not covered" >data.index,</span>
+						reqArr = <span class="cstat-no" title="statement not covered" >data.reqArr,</span>
+						returnValueArr = <span class="cstat-no" title="statement not covered" >data.returnValueArr,</span>
+						callback = <span class="cstat-no" title="statement not covered" >data.callback;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >					returnValueArr[index] = returnValue;</span>
+<span class="cstat-no" title="statement not covered" >					delete reqArr[index];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >					checkRequireArray(reqArr, returnValueArr, callback, def);</span>
+				});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >				delete checkRequireDataSet[url];</span>
+<span class="cstat-no" title="statement not covered" >				return returnValue; </span>// 传递给下一个then
+			}, function() <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >				$.each(checkRequireDataSet[url], function(i, data) <span class="fstat-no" title="function not covered" >{</span></span>
+					var errorCallback = <span class="cstat-no" title="statement not covered" >data.errorCallback;</span>
+<span class="cstat-no" title="statement not covered" >					errorCallback &amp;&amp; errorCallback(url);</span>
+				});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >				def.reject();</span>
+<span class="cstat-no" title="statement not covered" >				delete checkRequireDataSet[url];</span>
+<span class="cstat-no" title="statement not covered" >				throw new Error('"' + url + '" load fail!');</span>
+			});
+		});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		return def;</span>
+	}
+&nbsp;
+	// 用于修改 ajax 使用的方法
+	ajaxRequire.ajax = function(func) {
+		ajax = func;
+	};
+&nbsp;
+	function checkRequireArray(reqArr, returnValueArr, callback, def) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >		if ($.isEmptyObject(reqArr)) {</span>
+<span class="cstat-no" title="statement not covered" >			callback.apply(null, returnValueArr);</span>
+<span class="cstat-no" title="statement not covered" >			def.resolve.apply(null, returnValueArr);</span>
+		}
+	}
+&nbsp;
+	/**
+	 * 将参数对象拼装进 url
+	 * @param  {String} url   需要拼装的 url
+	 * @param  {Object} param 参数对象
+	 * @return {String}       返回拼装好的新 url
+	 */
+	function composeUrl(url, param) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >		if (typeof param !== 'object') <span class="cstat-no" title="statement not covered" >return url;</span></span>
+&nbsp;
+		var paramArr = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >		for (var key in param) {</span>
+<span class="cstat-no" title="statement not covered" >			paramArr.push({</span>
+				'key': key,
+				'value': param[key]
+			});
+		}
+&nbsp;
+		// 根据 key 进行排序
+<span class="cstat-no" title="statement not covered" >		paramArr.sort(function(a, b) <span class="fstat-no" title="function not covered" >{</span></span>
+			var av = <span class="cstat-no" title="statement not covered" >a['key'],</span>
+				bv = <span class="cstat-no" title="statement not covered" >b['key'];</span>
+<span class="cstat-no" title="statement not covered" >			return av.localeCompare(bv);</span>
+		});
+&nbsp;
+		var paramStr = <span class="cstat-no" title="statement not covered" >'';</span>
+<span class="cstat-no" title="statement not covered" >		for (var i = 0, p; p = paramArr[i++];) {</span>
+<span class="cstat-no" title="statement not covered" >			paramStr += '&amp;' + p['key'] + '=' + p['value'];</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		if (url.indexOf('?') &gt;= 0) {</span>
+			var lastChar = <span class="cstat-no" title="statement not covered" >url.charAt(url.length - 1);</span>
+<span class="cstat-no" title="statement not covered" >			if (lastChar === '&amp;' || lastChar === '?') <span class="cstat-no" title="statement not covered" >paramStr = paramStr.substr(1);</span></span>
+		} else {
+<span class="cstat-no" title="statement not covered" >			paramStr = '?' + paramStr.substr(1);</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		return url + paramStr;</span>
+	}
+&nbsp;
+&nbsp;
+	// 默认使用 jQuery.ajax
+	ajaxRequire.ajax(function(params, done, fail) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >		params = $.extend(params, {</span>
+			type: 'GET',
+			dataType : 'json'
+		});
+<span class="cstat-no" title="statement not covered" >		$.ajax(params).done(done).fail(fail);</span>
+	});
+&nbsp;
+	return ajaxRequire;
+}));</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 21 2017 21:59:31 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>
