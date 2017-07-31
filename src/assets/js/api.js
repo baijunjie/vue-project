@@ -1,9 +1,9 @@
-let env = 'dev';
+let env = process.env.NODE_ENV;
 
 let host = {
     'default': 'http://localhost',
-    'dev': 'http://localhost',
-    'pro': 'http://localhost'
+    'development': 'http://localhost',
+    'production': 'http://localhost'
 };
 
 function getHost(alias) {
