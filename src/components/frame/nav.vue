@@ -1,21 +1,30 @@
 <template>
     <el-menu :default-active="$route.fullPath"
-             :default-openeds="[0]"
+             :default-openeds="links.map(item => item.path)"
              router>
-        <template v-for="(link, index) in links"
+        <template v-for="link in links"
                   v-if="!link.hide && link.path">
             <el-submenu v-if="link.children && link.children.length"
-                        :key="index"
+                        :key="link.path"
                         :index="link.path">
-                <el-menu-item slot="title"
+
+                <template v-if="link.empty"
+                          slot="title"
+                          class="submenu-title">
+                    <i :class="link.icon"></i>
+                    <span v-text="$t(link.i18n)"></span>
+                </template>
+                <el-menu-item v-else
+                              slot="title"
                               class="submenu-title"
                               :index="link.path">
                     <i :class="link.icon"></i>
                     <span v-text="$t(link.i18n)"></span>
                 </el-menu-item>
-                <el-menu-item v-for="(childLink, childIndex) in link.children"
+
+                <el-menu-item v-for="childLink in link.children"
                               v-if="!childLink.hide && childLink.path"
-                              :key="index + '-' + childIndex"
+                              :key="childLink.path"
                               :index="childLink.path">
                     <i :class="childLink.icon"></i>
                     <span v-text="$t(childLink.i18n)"></span>
