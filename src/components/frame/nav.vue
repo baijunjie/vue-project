@@ -1,11 +1,11 @@
 <template>
     <el-menu :default-active="$route.fullPath"
-             :default-openeds="['/foo']"
+             :default-openeds="[0]"
              router>
-        <template v-for="link in links"
+        <template v-for="(link, index) in links"
                   v-if="!link.hide && link.path">
             <el-submenu v-if="link.children && link.children.length"
-                        :key="link.path"
+                        :key="index"
                         :index="link.path">
                 <el-menu-item slot="title"
                               class="submenu-title"
@@ -13,9 +13,9 @@
                     <i :class="link.icon"></i>
                     <span v-text="$t(link.i18n)"></span>
                 </el-menu-item>
-                <el-menu-item v-for="childLink in link.children"
+                <el-menu-item v-for="(childLink, childIndex) in link.children"
                               v-if="!childLink.hide && childLink.path"
-                              :key="childLink.path"
+                              :key="index + '-' + childIndex"
                               :index="childLink.path">
                     <i :class="childLink.icon"></i>
                     <span v-text="$t(childLink.i18n)"></span>
