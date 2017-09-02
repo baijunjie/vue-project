@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
 	i18n = require('gulp-i18n-combine');
 
-var srcPath = '../src/**/*-*.json',
+var srcPath = '../src/**/zh-CN.json',
     distPath = '../static/data/i18n/';
 
 gulp.task('i18nClean', function () {
@@ -10,7 +10,7 @@ gulp.task('i18nClean', function () {
 		.pipe(clean({ force: true }));
 });
 
-gulp.task('i18n', ['i18nClean'], function () {
+gulp.task('i18n', function () {
 	return gulp.src(srcPath)
 		.pipe(i18n())
 		.pipe(gulp.dest(distPath));

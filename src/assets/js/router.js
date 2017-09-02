@@ -22,7 +22,7 @@ import pathToRegexp from 'path-to-regexp';
 
 Vue.use(VueRouter);
 
-const parentComponent = {
+const routeComponent = {
     template: '<router-view></router-view>'
 };
 
@@ -54,12 +54,16 @@ function initRoutes(routes, parentRoute) {
             route.empty = true;
         }
 
-        if (typeof route.path === 'undefined' && route.name) {
-            route.path = route.name;
+        if (typeof route.path === 'undefined') {
+            if (route.name) {
+                route.path = route.name;
+            } else {
+                route.path = '';
+            }
         }
 
         if (typeof route.path === 'string') {
-           if (parentRoute && !slashStartReg.test(route.path)) {
+            if (parentRoute && !slashStartReg.test(route.path)) {
                 // 处理相对路径
                 route.path = parentRoute.path.replace(slashEndReg, '') + '/' + route.path.replace(slashStartReg, '');
             } else {
@@ -76,8 +80,8 @@ function initRoutes(routes, parentRoute) {
 }
 
 function toVueRoutes(routes) {
-    return routes.map(function(route) {
-        let vueRoute = Object.assign({}, route);
+    return routes.map(function (route) {
+        const vueRoute = Object.assign({}, route);
 
         // 在递归中过滤掉创建的默认子路由
         if (!vueRoute.meta) {
@@ -85,20 +89,27 @@ function toVueRoutes(routes) {
         }
 
         if (vueRoute.children && vueRoute.children.length) {
-            let children = Object.assign([], vueRoute.children);
+            const children = Object.assign([], vueRoute.children);
 
-            if (!vueRoute.nesting) {
-                if (vueRoute.component) {
-                    children.unshift({
-                        meta: vueRoute.meta,
-                        name: vueRoute.name,
-                        path: '',
-                        component: vueRoute.component
-                    });
-                    delete vueRoute.name;
+            if (vueRoute.component) {
+                const defaultChild = {
+                    meta: vueRoute.meta,
+                    name: vueRoute.name,
+                    path: ''
+                };
+                delete vueRoute.name;
+
+                if (vueRoute.defaultChild) {
+                    defaultChild.component = vueRoute.defaultChild;
+                } else {
+                    // 如果没有默认页，则将自己的组件作为默认页，然后用路由组件替换 component
+                    defaultChild.component = vueRoute.component;
+                    vueRoute.component = routeComponent;
                 }
 
-                vueRoute.component = parentComponent;
+                children.unshift(defaultChild);
+            } else {
+                vueRoute.component = routeComponent;
             }
 
             vueRoute.children = toVueRoutes(children);

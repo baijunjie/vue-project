@@ -1,8 +1,0 @@
-{
-	"name": "Foo",
-    "defaultBtn": "Default button",
-    "primaryBtn": "Primary button",
-    "textBtn": "Text button",
-    "touchMe": "Touch me!",
-    "submitForm": "Submit form: {msg}"
-}

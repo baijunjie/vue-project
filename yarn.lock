@@ -3136,6 +3136,13 @@ gulp-i18n-combine@^1.1.1:
     gulp-util "^3.0.7"
     through2 "^2.0.1"
 
+gulp-insert@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/gulp-insert/-/gulp-insert-0.5.0.tgz#32313f13e4a23cf5acca5ce5f0c080923c778602"
+  dependencies:
+    readable-stream "^1.0.26-4"
+    streamqueue "0.0.6"
+
 gulp-less@^3.3.0:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/gulp-less/-/gulp-less-3.3.2.tgz#f6636adcc66150a8902719fa59963fc7f862a49a"
@@ -3179,6 +3186,10 @@ gulp-postcss@^6.2.0:
     postcss "^5.2.12"
     postcss-load-config "^1.2.0"
     vinyl-sourcemaps-apply "^0.2.1"
+
+gulp-rename@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
 gulp-rename@~1.1.0:
   version "1.1.0"
@@ -3251,6 +3262,10 @@ gzip-size@^3.0.0:
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-3.0.0.tgz#546188e9bdc337f673772f81660464b389dce520"
   dependencies:
     duplexer "^0.1.1"
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
 handlebars@^1.3.0:
   version "1.3.0"
@@ -3863,6 +3878,10 @@ isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
 isbinaryfile@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-3.0.2.tgz#4a3e974ec0cba9004d3fc6cde7209ea69368a621"
+
+"iscroll@github:baijunjie/iscroll":
+  version "5.2.0-snapshot"
+  resolved "https://codeload.github.com/baijunjie/iscroll/tar.gz/7d09eba093215e04897fe8e1106d54cc607c3254"
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -4640,6 +4659,13 @@ lru-cache@^4.0.1:
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
+
+lrz@^4.9.40:
+  version "4.9.40"
+  resolved "https://registry.yarnpkg.com/lrz/-/lrz-4.9.40.tgz#2fd3b42588a20a57fd7aa79f81568c845e4e3d73"
+  dependencies:
+    gulp-insert "^0.5.0"
+    gulp-rename "^1.2.2"
 
 macaddress@^0.2.8:
   version "0.2.8"
@@ -5428,9 +5454,13 @@ phantomjs-prebuilt@^2.1.14, phantomjs-prebuilt@^2.1.7:
     request-progress "~2.0.1"
     which "~1.2.10"
 
-photoclip@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.2.0.tgz#775446c36f85958b60eabdad26f44d35dda7a408"
+photoclip@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.3.3.tgz#b566f9c8773edf13d8159f4188ebbb2c1f2cbf26"
+  dependencies:
+    hammerjs "^2.0.8"
+    iscroll baijunjie/iscroll
+    lrz "^4.9.40"
 
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
@@ -6269,7 +6299,7 @@ readable-stream@1.0, "readable-stream@>=1.0.33-1 <1.1.0-0", readable-stream@~1.0
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@1.1.x, readable-stream@~1.1.9:
+readable-stream@1.1.x, readable-stream@^1.0.26-2, readable-stream@^1.0.26-4, readable-stream@~1.1.9:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   dependencies:
@@ -6921,6 +6951,12 @@ stream-http@^2.3.1:
     readable-stream "^2.2.6"
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
+
+streamqueue@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/streamqueue/-/streamqueue-0.0.6.tgz#66f5f5ec94e9b8af249e4aec2dd1f741bfe94de3"
+  dependencies:
+    readable-stream "^1.0.26-2"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
