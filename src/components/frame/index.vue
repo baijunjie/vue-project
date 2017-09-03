@@ -37,7 +37,7 @@ export default {
 @breadcrumb: 30px; // 面包屑高度
 
 #mainHeader {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -46,7 +46,7 @@ export default {
 }
 
 #mainNav {
-    position: fixed;
+    position: absolute;
     top: @header_height;
     bottom: 0;
     left: 0;
@@ -55,7 +55,7 @@ export default {
 }
 
 #breadcrumb {
-    position: fixed;
+    position: absolute;
     top: @header_height;
     left: @nav_width;
     right: 0;

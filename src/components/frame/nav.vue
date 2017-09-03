@@ -73,6 +73,10 @@ a {
     .acl(none);
 }
 
+.fa {
+    margin-right: 10px;
+}
+
 .submenu-title {
     height: auto;
     padding: 0 !important;
