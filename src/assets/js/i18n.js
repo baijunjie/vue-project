@@ -29,42 +29,45 @@ Vue.use(VueI18n);
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
-// 定义事件 callback 集合
-let callbackSet = {
-        'requireLangDone': [], // 请求一种语言完成时的回调
-        'requireLangFail': [], // 请求一种语言失败时的回调
-        'change': [], // 语言变更时的回调
-        'ready': []  // 第一种语言准备好时的回调
-    },
+import BaseEventObject from 'base-event-object';
 
-    cfg = {
-        // paths 语言包路径配置对象
-        // {
-        //     'zh-CN': 'language/zh-CN.json'
-        // }
-        paths: {},
+const eventer = new BaseEventObject([
+    'requireLangDone', // 请求一种语言完成时的回调
+    'requireLangFail', // 请求一种语言失败时的回调
+    'change', // 语言变更时的回调
+    'ready' // 第一种语言准备好时的回调
+]);
 
-        // 设置 http 请求的默认配置选项。
-        http: {},
+const i18n = extend(new VueI18n(), {
+    getLang,
+    setLang,
+    getAllLang,
+    setAllLang,
+    getLangType,
+    setLangType,
+    getT,
+    config,
+    on: eventer.on,
+    off: eventer.off,
+    emit: eventer.emit,
+    callbackSet: eventer.callbackSet
+});
 
-        // 语言类型是否大小写敏感
-        caseSensitive: false
-    },
+const cfg = {
+    // paths 语言包路径配置对象
+    // {
+    //     'zh-CN': 'language/zh-CN.json'
+    // }
+    paths: {},
 
-    isReady = false,
+    // 设置 http 请求的默认配置选项。
+    http: {},
 
-    i18n = extend(new VueI18n(), {
-        getLang,
-        setLang,
-        getAllLang,
-        setAllLang,
-        getLangType,
-        setLangType,
-        getT,
-        config,
-        on,
-        off
-    });
+    // 语言类型是否大小写敏感
+    caseSensitive: false
+};
+
+let isReady = false;
 
 config({
     http: {
@@ -89,15 +92,6 @@ function checkLangType(langType, obj) {
         }
         return false;
     }
-}
-
-// 执行指定事件类型的 callback
-// 并将第二个参数及之后参数传递给 callback
-function execCallbak(type) {
-    let args = Array.prototype.slice.call(arguments, 1);
-    callbackSet[type].concat().forEach(function(cb) {
-        cb.apply(i18n, args);
-    });
 }
 
 /**
@@ -218,7 +212,7 @@ function setLangType(langType) {
                     if (res.status === 200) {
                         return res.json();
                     } else {
-                        execCallbak('requireLangFail', langType);
+                        i18n.emit('requireLangFail', langType);
                         reject('requireLangFail');
                     }
                 })
@@ -228,22 +222,21 @@ function setLangType(langType) {
 
                     if (!isReady) {
                         isReady = true;
-                        execCallbak('ready', langType);
-                        delete callbackSet['ready'];
+                        i18n.emit('ready', langType);
                     }
 
-                    execCallbak('requireLangDone', langType);
+                    i18n.emit('requireLangDone', langType);
                     resolve('requireLangDone');
                 })
                 .catch(function(error) {
-                    execCallbak('requireLangFail', langType);
+                    i18n.emit('requireLangFail', langType);
                     reject('requireLangFail');
                 });
         }
     });
 
     promise.then(function() {
-        execCallbak('change', langType);
+        i18n.emit('change', langType);
     });
 
     return promise;
@@ -269,81 +262,6 @@ function getT(path) {
 function config(config) {
     if (config) extend(true, cfg, config);
     return i18n;
-}
-
-/**
- * 注册事件监听
- * @param  {String}             type      事件类型。
- * @param  {Function}           callback  事件监听函数。
- * @return {Function|Undefined}           如果注册成功，则返回一个反注册函数，调用它可以取消监听。
- */
-function on(type, callback) {
-    // 如果已有一个语言准备好，并且事件类型为 'ready'，则立即执行 callback
-    if (isReady && type === 'ready' && typeof callback === 'function') {
-        callback.call(i18n, i18n.locale);
-        return;
-    }
-
-    if (!callbackSet[type]) return;
-
-    let cbArr = callbackSet[type];
-
-    if (typeof callback === 'function' && cbArr.indexOf(callback) < 0) {
-        cbArr.push(callback);
-    }
-
-    return function() {
-        let index = cbArr.indexOf(callback);
-        if (index >= 0) {
-            cbArr.splice(index, 1);
-        }
-    };
-}
-
-/**
- * 移除事件监听
- * @param  {String}   type     可选。事件类型。
- *                             如果传入一个 Function，则会被当做事件监听函数来处理。
- * @param  {Function} callback 可选。事件监听函数。
- */
-function off(type, callback) {
-    let i,
-        cbSet,
-        typeStr = typeof type;
-
-    if (typeStr === 'undefined') {
-        for (i in callbackSet) {
-            callbackSet[i].length = 0;
-        }
-        return;
-
-    } else if (typeStr === 'function') {
-        callback = type;
-        cbSet = callbackSet;
-
-    } else if (typeStr === 'string') {
-        if (callbackSet[type]) {
-            cbSet = {};
-            cbSet[type] = callbackSet[type];
-        } else {
-            return;
-        }
-
-        if (callback === undefined) {
-            cbSet[type].length = 0;
-        }
-    } else {
-        return;
-    }
-
-    let cbArr, index;
-    for (i in cbSet) {
-        cbArr = cbSet[i];
-        index = cbArr.indexOf(callback);
-        if (index >= 0) {
-            cbArr.splice(index, 1);
-        }
-    }
 }
 
 function extend() {

@@ -942,6 +942,10 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-event-object@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/base-event-object/-/base-event-object-0.0.3.tgz#5bdbb704392cbff0b91824b044bb0647bb70cc6f"
+
 base64-arraybuffer@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz#73926771923b5a19747ad666aa5cd4bf9c6e9ce8"
@@ -3879,7 +3883,7 @@ isbinaryfile@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-3.0.2.tgz#4a3e974ec0cba9004d3fc6cde7209ea69368a621"
 
-"iscroll@github:baijunjie/iscroll":
+iscroll@baijunjie/iscroll:
   version "5.2.0-snapshot"
   resolved "https://codeload.github.com/baijunjie/iscroll/tar.gz/7d09eba093215e04897fe8e1106d54cc607c3254"
 
