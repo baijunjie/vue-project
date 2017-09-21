@@ -51,10 +51,7 @@ const i18n = extend(new VueI18n(), {
     setLangType,
     getT,
     config,
-    once: eventObject.once.bind(eventObject),
-    on: eventObject.on.bind(eventObject),
-    off: eventObject.off.bind(eventObject),
-    emit: eventObject.emit.bind(eventObject)
+    ...eventObject
 });
 
 const cfg = {
