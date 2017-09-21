@@ -942,9 +942,9 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
-base-event-object@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/base-event-object/-/base-event-object-0.3.1.tgz#7c7ba0ff3740e63a43aa95eb2e90dc1e8d940235"
+base-event-object@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/base-event-object/-/base-event-object-0.3.2.tgz#60f2bec9fc1794a6066ac7c73c433f7663931dc5"
 
 base64-arraybuffer@0.1.5:
   version "0.1.5"
