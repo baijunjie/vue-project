@@ -19,7 +19,6 @@ if (!utils.sessionTimeoutValidate('userData')) {
 }
 // 登录验证钩子
 router.beforeEach((to, from, next) => {
-    console.log(to.name);
     if (to.name !== 'login' && !utils.getStorage('userData')) {
         router.push({
             name: 'login'
@@ -38,7 +37,7 @@ i18n.config({
     }
 });
 
-i18n.on('change', function(langType) {
+i18n.on('change', function(e, langType) {
     console.log('语言变更为：', langType);
     utils.setStorage('language', langType);
 });
@@ -55,7 +54,7 @@ Vue.use(ElementUI, {
     }
 });
 
-i18n.on('requireLangDone', langType => {
+i18n.on('requireLangDone', (e, langType) => {
     switch (langType) {
     case 'zh-CN':
         i18n.setAllLang(langType, ELUI_ZHCN);
@@ -69,7 +68,7 @@ i18n.on('requireLangDone', langType => {
 import '@/assets/js/patch';
 import App from '@/App';
 
-i18n.on('ready', function(langType) {
+i18n.on('ready', function(e, langType) {
     /* eslint-disable no-new */
     new Vue({
         el: '#app',

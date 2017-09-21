@@ -31,12 +31,16 @@ Vue.use(VueResource);
 
 import BaseEventObject from 'base-event-object';
 
-const eventer = new BaseEventObject([
-    'requireLangDone', // 请求一种语言完成时的回调
-    'requireLangFail', // 请求一种语言失败时的回调
-    'change', // 语言变更时的回调
-    'ready' // 第一种语言准备好时的回调
-]);
+const eventObject = new BaseEventObject({
+    events: [
+        'requireLangDone', // 请求一种语言完成时的回调
+        'requireLangFail', // 请求一种语言失败时的回调
+        'change' // 语言变更时的回调
+    ],
+    onceEvents: [
+        'ready' // 第一种语言准备好时的回调
+    ]
+});
 
 const i18n = extend(new VueI18n(), {
     getLang,
@@ -47,10 +51,10 @@ const i18n = extend(new VueI18n(), {
     setLangType,
     getT,
     config,
-    on: eventer.on,
-    off: eventer.off,
-    emit: eventer.emit,
-    callbackSet: eventer.callbackSet
+    once: eventObject.once.bind(eventObject),
+    on: eventObject.on.bind(eventObject),
+    off: eventObject.off.bind(eventObject),
+    emit: eventObject.emit.bind(eventObject)
 });
 
 const cfg = {

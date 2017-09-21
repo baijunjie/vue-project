@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "ajax-require": "^1.0.2",
-    "base-event-object": "^0.0.3",
+    "base-event-object": "^0.2.0",
     "element-ui": "^1.3.7",
     "jquery": "^3.2.1",
     "jquery.animate": "^1.8.8",
