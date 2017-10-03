@@ -213,16 +213,30 @@ export function hideAction(elems, func, target) {
 	}
 }
 
-// 从数组中找到 key 值与 value 相同的对象，并返回
-export function findSameValueOfObjectFromArray(arr, key, value) {
-	let findItem;
-	arr.some(item => {
-		if (item[key] === value) {
-			findItem = item;
-			return true;
-		}
-	});
-	return findItem;
+/**
+ * 从数组中找到 key 值与 value 相同的对象，并返回
+ * @param   {Array}  arr
+ * @param   {String} key
+ * @param   {*}      value
+ * @param   {Boolean}      typeMatch
+ * @returns {Object}
+ */
+export function findSameValueOfObjectFromArray(arr, key, value, typeMatch = true) {
+    let findItem;
+    arr.some(item => {
+        if (typeMatch) {
+            if (item[key] === value) {
+                findItem = item;
+                return true;
+            }
+        } else {
+            if (item[key] == value) {
+                findItem = item;
+                return true;
+            }
+        }
+    });
+    return findItem;
 }
 
 // 将字符串替换为 <br/>
