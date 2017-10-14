@@ -24,6 +24,7 @@ router.beforeEach((to, from, next) => {
             name: 'login'
         });
     } else {
+        document.title = i18n.t(to.meta.i18n);
         next();
     }
 });
@@ -31,6 +32,7 @@ router.beforeEach((to, from, next) => {
 // 国际化
 import i18n from '@/assets/js/i18n';
 i18n.config({
+    fallbackLocale: 'zh-CN',
     paths: {
         'zh-CN': './static/data/i18n/zh-CN.json',
         'en-US': './static/data/i18n/en-US.json'

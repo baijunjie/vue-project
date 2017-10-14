@@ -18,7 +18,6 @@ export default {
 
     watch: {
         $route(to, from) {
-            document.title = this.$t(to.meta.i18n);
             this.routeList = this.$router.matchRoutes(to);
         }
     }

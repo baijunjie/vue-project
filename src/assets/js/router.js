@@ -43,7 +43,7 @@ function setRoutes(routes) {
 }
 
 function getRoute(key, value) {
-    return findRoute(router.routes, key, value).meta;
+    return findRoute(router.routes, key, value);
 }
 
 function initRoutes(routes, parentRoute) {

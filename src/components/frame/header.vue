@@ -2,22 +2,20 @@
     <section class="header">
         <div class="title" v-text="$t('components.frame.title')"></div>
         <a href="javascript:void(0);" class="close" @click="logout"><i class="fa fa-power-off"></i></a>
-        <div class="language">
-            <a href="javascript:void(0);" @click="changeLang('zh-CN')">简体中文</a>
-            <span> | </span>
-            <a href="javascript:void(0);" @click="changeLang('en-US')">English</a>
-        </div>
+        <v-language-toggle class="language-toggle"></v-language-toggle>
     </section>
 </template>
 
 <script>
 import { utils } from 'G';
+import LanguageToggle from '../LanguageToggle';
 
 export default {
+    components: {
+        vLanguageToggle: LanguageToggle
+    },
+
     methods: {
-        changeLang(langType) {
-            this.$i18n.setLangType(langType);
-        },
         logout() {
             utils.logout();
         }
@@ -61,15 +59,9 @@ export default {
         .bgcl(transparent rgba(0,0,0,.1));
     }
 
-    .language {
+    .language-toggle {
         float: right;
         height: 100%;
-        font-size: 14px;
-        color: #fff;
-
-        a {
-            color: #fff;
-        }
     }
 }
 </style>

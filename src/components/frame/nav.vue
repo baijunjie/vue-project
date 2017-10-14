@@ -4,7 +4,7 @@
              router>
         <template v-for="link in links"
                   v-if="!link.hide && link.path">
-            <el-submenu v-if="link.children && link.children.length"
+            <el-submenu v-if="hasChildren(link)"
                         :key="link.path"
                         :index="link.path">
 
@@ -53,6 +53,12 @@ export default {
         // 判断当前页面路径是否在指定路径下
         containPath(path) {
             return !this.$route.fullPath.indexOf(path);
+        },
+
+        hasChildren(routes) {
+            return routes.children &&
+                   routes.children.length &&
+                   routes.children.some(route => !route.hide);
         }
     }
 };

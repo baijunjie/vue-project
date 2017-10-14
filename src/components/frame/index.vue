@@ -16,15 +16,15 @@
 </template>
 
 <script>
-import header from './header.vue';
-import nav from './nav.vue';
-import breadcrumb from './breadcrumb.vue';
+import Header from './Header';
+import Nav from './Nav';
+import Breadcrumb from './Breadcrumb';
 
 export default {
     components: {
-        vHeader: header,
-        vNav: nav,
-        vBreadcrumb: breadcrumb
+        vHeader: Header,
+        vNav: Nav,
+        vBreadcrumb: Breadcrumb
     }
 };
 </script>
@@ -33,7 +33,7 @@ export default {
 @import '~less-lib';
 
 @header_height: 60px;  // 头部高度
-@nav_width: 200px;  // 左侧导航宽度
+@nav_width: 250px;  // 左侧导航宽度
 @breadcrumb: 30px; // 面包屑高度
 
 #mainHeader {

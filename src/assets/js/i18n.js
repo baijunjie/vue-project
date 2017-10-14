@@ -55,6 +55,8 @@ const i18n = extend(new VueI18n(), {
 });
 
 const cfg = {
+    fallbackLocale: null,
+
     // paths 语言包路径配置对象
     // {
     //     'zh-CN': 'language/zh-CN.json'
@@ -134,7 +136,7 @@ function setLang(key, value) {
         setValue(langDict, key, value);
     }
 
-    i18n.setLocaleMessage(langType, extend(true, i18n.messages[langType], langDict));
+    i18n.mergeLocaleMessage(langType, langDict);
 
     return i18n;
 }
@@ -262,6 +264,7 @@ function getT(path) {
  */
 function config(config) {
     if (config) extend(true, cfg, config);
+    i18n.fallbackLocale = cfg.fallbackLocale;
     return i18n;
 }
 

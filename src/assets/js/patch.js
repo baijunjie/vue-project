@@ -6,7 +6,6 @@ import popup from '../plugins/popup/js/popup.js';
 let factory = function(template) {
     let VueComponent = Vue.extend({
         template,
-        i18n,
         data: () => ({
             loading: false,
             disabled: false,
@@ -17,7 +16,7 @@ let factory = function(template) {
         })
     });
 
-    let vm = new VueComponent();
+    let vm = new VueComponent({ i18n });
     vm.$mount();
 
     return {

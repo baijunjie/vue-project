@@ -1,5 +1,6 @@
 <template>
     <section id="login">
+        <v-language-toggle class="language-toggle"></v-language-toggle>
         <div class="title" v-text="T('title')"></div>
         <div class="box">
             <el-form ref="form"
@@ -14,7 +15,8 @@
 
                 <el-form-item :label="T('password')"
                               prop="password">
-                    <el-input v-model="form.password" />
+                    <el-input v-model="form.password"
+                              type="password" />
                 </el-form-item>
 
                 <el-button type="primary"
@@ -29,6 +31,7 @@
 
 <script>
 import { utils } from 'G';
+import LanguageToggle from '../../components/LanguageToggle';
 
 export default {
     data() {
@@ -46,6 +49,10 @@ export default {
                 password: { required: true, message: T('passwordNotEmpty'), trigger: 'change' }
             }
         };
+    },
+
+    components: {
+        vLanguageToggle: LanguageToggle
     },
 
     methods: {
@@ -113,6 +120,12 @@ export default {
 
     .submit {
         margin-top: 20px;
+    }
+
+    .language-toggle {
+        position: absolute;
+        top: 20px;
+        right: 40px;
     }
 }
 </style>

@@ -1,52 +1,52 @@
-let login = {
+let Login = {
     i18n: 'views.login.name',
     name: 'login',
-    component: resolve => require(['@/views/login'], resolve)
+    component: resolve => require(['@/views/Login'], resolve)
 };
 
-let home = {
+let Home = {
     i18n: 'views.home.name',
     name: 'home',
     path: '',
     hide: true,
-    component: resolve => require(['@/components/frame'], resolve),
-    defaultChild: resolve => require(['@/views/home'], resolve)
+    component: resolve => require(['@/components/Frame'], resolve),
+    defaultChild: resolve => require(['@/views/Home'], resolve)
 };
 
-let p404 = {
+let P404 = {
     name: '404',
     path: '/*',
     hide: true,
     component: resolve => require(['@/views/404'], resolve)
 };
 
-let foo = {
+let Foo = {
     i18n: 'menu.goToFoo',
     name: 'foo',
     icon: 'el-icon-menu',
-    component: resolve => require(['@/views/demo/foo'], resolve)
+    component: resolve => require(['@/views/demo/Foo'], resolve)
 };
 
-let bar = {
+let Bar = {
     i18n: 'menu.goToBar',
     name: 'bar',
     icon: 'el-icon-menu',
-    component: resolve => require(['@/views/demo/bar'], resolve)
+    component: resolve => require(['@/views/demo/Bar'], resolve)
 };
 
 // 定义页面之间的父子关系
 export default [
     {
-        ...home,
+        ...Home,
         children: [
             {
-                ...foo,
+                ...Foo,
                 children: [
-                    bar
+                    Bar
                 ]
             },
-            p404
+            P404
         ]
     },
-    login
+    Login
 ];
