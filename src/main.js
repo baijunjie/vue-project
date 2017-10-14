@@ -1,18 +1,25 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import VueResource from 'vue-resource';
+import router from '@/assets/js/router';
+import routes from '@/routes';
+import i18n from '@/assets/js/i18n';
+import ElementUI from 'element-ui';
+import ELUI_ZHCN from 'element-ui/lib/locale/lang/zh-CN';
+import ELUI_EN from 'element-ui/lib/locale/lang/en';
+import '@/assets/js/patch';
+import { utils } from 'G';
+import App from '@/App';
+
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 // http 模块
-import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
 // 路由
-import router from '@/assets/js/router';
-import routes from '@/routes';
 router.setRoutes(routes);
 
-import { utils } from 'G';
 // 读取本地缓存的用户数据
 if (!utils.sessionTimeoutValidate('userData')) {
     utils.removeStorage('userData');
@@ -30,7 +37,6 @@ router.beforeEach((to, from, next) => {
 });
 
 // 国际化
-import i18n from '@/assets/js/i18n';
 i18n.config({
     fallbackLocale: 'zh-CN',
     paths: {
@@ -47,9 +53,6 @@ i18n.on('change', function(e, langType) {
 i18n.setLangType(utils.getStorage('language') || 'zh-CN');
 
 // UI 框架
-import ElementUI from 'element-ui';
-import ELUI_ZHCN from 'element-ui/lib/locale/lang/zh-CN';
-import ELUI_EN from 'element-ui/lib/locale/lang/en';
 Vue.use(ElementUI, {
     i18n() {
         return i18n.t.apply(i18n, arguments);
@@ -67,9 +70,6 @@ i18n.on('requireLangDone', (e, langType) => {
     }
 });
 
-import '@/assets/js/patch';
-import App from '@/App';
-
 i18n.on('ready', function(e, langType) {
     /* eslint-disable no-new */
     new Vue({
@@ -80,4 +80,3 @@ i18n.on('ready', function(e, langType) {
         i18n
     });
 });
-

@@ -24,12 +24,11 @@
  */
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-Vue.use(VueI18n);
-
 import VueResource from 'vue-resource';
-Vue.use(VueResource);
-
 import BaseEventObject from 'base-event-object';
+
+Vue.use(VueI18n);
+Vue.use(VueResource);
 
 const eventObject = new BaseEventObject({
     events: [
