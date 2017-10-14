@@ -3,7 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
-var pkg = require('../package.json')
+const  pkg = require('../package.json')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
