@@ -5,6 +5,7 @@ const webpack = require('webpack')
 const config = require('../config')
 const  pkg = require('../package.json')
 const vueLoaderConfig = require('./vue-loader.conf')
+const production = process.env.NODE_ENV === 'production'
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -18,7 +19,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
+    publicPath: production
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
@@ -49,7 +50,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), production ? resolve('node_modules') : resolve('test')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
