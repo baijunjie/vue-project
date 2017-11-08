@@ -3,7 +3,6 @@ const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
-const  pkg = require('../package.json')
 const vueLoaderConfig = require('./vue-loader.conf')
 const production = process.env.NODE_ENV === 'production'
 
@@ -13,8 +12,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js',
-    vendor: Object.keys(pkg.dependencies)
+    app: './src/main.js'
   },
   output: {
     path: config.build.assetsRoot,
