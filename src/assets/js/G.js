@@ -3,4 +3,4 @@ export { utils };
 
 export { default as api } from './api.js';
 
-export { default as popup } from '../plugins/popup/js/popup.js';
+export { default as popup } from '../plugins/popup/popup.js';
