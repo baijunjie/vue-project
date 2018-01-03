@@ -99,15 +99,15 @@ function toVueRoutes(routes) {
                 };
                 delete vueRoute.name;
 
-                if (vueRoute.defaultChild) {
+                if (vueRoute.frame) {
                     defaultChild.component = vueRoute.defaultChild;
                 } else {
-                    // 如果没有默认页，则将自己的组件作为默认页，然后用路由组件替换 component
+                    // 如果该路由不是一个frame，则将自己的组件作为默认页，然后用路由组件替换 component
                     defaultChild.component = vueRoute.component;
                     vueRoute.component = routeComponent;
                 }
 
-                children.unshift(defaultChild);
+                defaultChild.component && children.unshift(defaultChild);
             } else {
                 vueRoute.component = routeComponent;
             }

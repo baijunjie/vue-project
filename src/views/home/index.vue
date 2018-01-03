@@ -8,7 +8,7 @@
 export default {
     data() {
         return {
-            T: this.$i18n.getT('views.home')
+            T: this.$i18n.getT('views.Home')
         };
     }
 };

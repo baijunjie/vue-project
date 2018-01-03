@@ -35,7 +35,7 @@ import LanguageToggle from '../../components/LanguageToggle';
 
 export default {
     data() {
-        const T = this.$i18n.getT('views.login');
+        const T = this.$i18n.getT('views.Login');
         return {
             T,
 

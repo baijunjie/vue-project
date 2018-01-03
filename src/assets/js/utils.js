@@ -1,64 +1,27 @@
-import Vue from 'vue';
+import axios from 'axios';
 
 /**
  * json 请求的 AJAX 封装
  * @param  {String|Object}                url  请求地址，或者是 AJAX 配置对象
  * @param  {String|Array|Object|Function} data 请求中携带的参数。如果是 Function 则表示请求成功的回调。
  * @param  {Function}                     func 请求成功回调
- * @return {jqXHR} 返回 jQuery 的 AJAX 延迟对象
+ * @return {Promise} Promise 对象
  */
 export function ajax(url, data, func) {
 	var options;
 
-	if ($.isPlainObject(url)) {
+	if (typeof url === 'object') {
 		options = url;
 	} else {
 		options = { url: url };
 	}
 
-    if ($.isFunction(data)) {
+    if (typeof data === 'function') {
         options.success = data;
     } else if (data) {
         options.data = data;
 
-        if ($.isFunction(func)) {
-            options.success = func;
-        }
-    }
-
-	options = $.extend({
-		method: 'GET',
-		dataType: 'json',
-		contentType: 'application/json; charset=UTF-8',
-		xhrFields: {
-			withCredentials: true
-		}
-	}, options);
-
-    if (options.method.match(/post|put|patch/i)) {
-        try {
-            options.data = JSON.stringify(options.data);
-        } catch(err) {}
-    }
-
-	return $.ajax(options);
-}
-
-export function http(url, data, func) {
-	var options;
-
-	if ($.isPlainObject(url)) {
-		options = url;
-	} else {
-		options = { url: url };
-	}
-
-    if ($.isFunction(data)) {
-        options.success = data;
-    } else if (data) {
-        options.data = data;
-
-        if ($.isFunction(func)) {
+        if (typeof func === 'function') {
             options.success = func;
         }
     }
@@ -67,20 +30,17 @@ export function http(url, data, func) {
 		options.method = options.type;
 	}
 
-	options = $.extend({
+	options = extend({
 		method: 'GET',
 		responseType: 'json',
-		emulateJson: true,
-		credentials: true
+        withCredentials: false
 	}, options);
 
 	if (options.method.match(/get/i)) {
 		options.params = options.data;
-	} else if (options.method.match(/post|put|patch/i)) {
-		options.body = options.data;
 	}
 
-	return Vue.http(options).then(function(res) {
+	return axios(options).then(function(res) {
 		options.success && options.success.call(this, res.data);
 		return res.data;
 	}).catch(function(e) {
@@ -297,6 +257,3 @@ export function log() {
 	});
 	console.log.apply(console, args);
 }
-
-import ajaxRequire from 'ajax-require';
-export { ajaxRequire };

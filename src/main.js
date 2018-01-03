@@ -1,21 +1,18 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import VueResource from 'vue-resource';
 import router from '@/assets/js/router';
 import routes from '@/routes';
 import i18n from '@/assets/js/i18n';
 import ElementUI from 'element-ui';
 import ELUI_ZHCN from 'element-ui/lib/locale/lang/zh-CN';
 import ELUI_EN from 'element-ui/lib/locale/lang/en';
+import 'jquery.animate';
 import '@/assets/js/patch';
 import { utils } from 'G';
 import App from '@/App';
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
-
-// http 模块
-Vue.use(VueResource);
 
 // 路由
 router.setRoutes(routes);
@@ -41,7 +38,7 @@ i18n.config({
     fallbackLocale: 'zh-CN',
     paths: {
         'zh-CN': './static/data/i18n/zh-CN.json',
-        'en-US': './static/data/i18n/en-US.json'
+        'en': './static/data/i18n/en.json'
     }
 });
 
@@ -64,7 +61,7 @@ i18n.on('requireLangDone', (e, langType) => {
     case 'zh-CN':
         i18n.setAllLang(langType, ELUI_ZHCN);
         break;
-    case 'en-US':
+    case 'en':
         i18n.setAllLang(langType, ELUI_EN);
         break;
     }

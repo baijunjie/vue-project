@@ -2,7 +2,7 @@
     <section class="language-toggle">
         <a href="javascript:void(0);" @click="changeLang('zh-CN')">简体中文</a>
         <span> | </span>
-        <a href="javascript:void(0);" @click="changeLang('en-US')">English</a>
+        <a href="javascript:void(0);" @click="changeLang('en')">English</a>
     </section>
 </template>
 

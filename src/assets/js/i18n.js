@@ -24,11 +24,10 @@
  */
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-import VueResource from 'vue-resource';
+import axios from 'axios';
 import BaseEventObject from 'base-event-object';
 
 Vue.use(VueI18n);
-Vue.use(VueResource);
 
 const eventObject = new BaseEventObject({
     events: [
@@ -209,13 +208,12 @@ function setLangType(langType) {
         } else if (langTypeExsit = checkLangType(langType, cfg.paths)) {
             let options = extend(true, {}, cfg.http, { url: cfg.paths[langTypeExsit] });
 
-            Vue.http(options)
+            axios(options)
                 .then(function(res) {
                     if (res.status === 200) {
-                        return res.json();
+                        return res.data;
                     } else {
-                        i18n.emit('requireLangFail', langType);
-                        reject('requireLangFail');
+                        return Promise.reject();
                     }
                 })
                 .then(function(json) {
@@ -230,7 +228,7 @@ function setLangType(langType) {
                     i18n.emit('requireLangDone', langType);
                     resolve('requireLangDone');
                 })
-                .catch(function(error) {
+                .catch(function() {
                     i18n.emit('requireLangFail', langType);
                     reject('requireLangFail');
                 });
@@ -346,7 +344,7 @@ function extend() {
 function setValue(obj, key, value) {
     if (!key) {
         if (typeof value === 'object') {
-            $.extend(obj, value);
+            extend(obj, value);
         }
         return;
     }

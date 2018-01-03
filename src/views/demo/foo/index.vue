@@ -20,7 +20,7 @@ import { popup } from 'G';
 export default {
     data() {
         return {
-            T: this.$i18n.getT('views.demo.foo')
+            T: this.$i18n.getT('views.demo.Foo')
         };
     },
 

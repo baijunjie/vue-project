@@ -12,7 +12,7 @@
         "goToBar": "Goto Bar"
     },
     "components": {
-        "frame": {
+        "Frame": {
             "title": "Management system"
         }
     },
@@ -21,10 +21,10 @@
             "name": "404",
             "message": "The page you visited is not found"
         },
-        "home": {
+        "Home": {
             "name": "home"
         },
-        "login": {
+        "Login": {
             "name": "Login",
             "title": "Management system",
             "userName": "User name",
@@ -34,10 +34,10 @@
             "passwordNotEmpty": "The password cannot be empty"
         },
         "demo": {
-            "bar": {
+            "Bar": {
                 "name": "Bar"
             },
-            "foo": {
+            "Foo": {
                 "name": "Foo",
                 "defaultBtn": "Default button",
                 "primaryBtn": "Primary button",

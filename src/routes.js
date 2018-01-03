@@ -1,14 +1,15 @@
 let Login = {
-    i18n: 'views.login.name',
+    i18n: 'views.Login.name',
     name: 'login',
     component: resolve => require(['@/views/Login'], resolve)
 };
 
 let Home = {
-    i18n: 'views.home.name',
+    i18n: 'views.Home.name',
     name: 'home',
     path: '',
     hide: true,
+    frame: true,
     component: resolve => require(['@/components/Frame'], resolve),
     defaultChild: resolve => require(['@/views/Home'], resolve)
 };

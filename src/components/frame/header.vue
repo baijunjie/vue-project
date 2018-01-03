@@ -1,6 +1,6 @@
 <template>
     <section class="header">
-        <div class="title" v-text="$t('components.frame.title')"></div>
+        <div class="title" v-text="$t('components.Frame.title')"></div>
         <a href="javascript:void(0);" class="close" @click="logout"><i class="fa fa-power-off"></i></a>
         <v-language-toggle class="language-toggle"></v-language-toggle>
     </section>

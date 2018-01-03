@@ -14,7 +14,7 @@ import PhotoClip from 'photoclip';
 export default {
     data() {
         return {
-            T: this.$i18n.getT('views.demo.bar')
+            T: this.$i18n.getT('views.demo.Bar')
         };
     },
     mounted () {

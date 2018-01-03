@@ -27,12 +27,10 @@ let factory = function(template) {
 
 let inAnimate = {
     start: {
-        x: '-50%',
         y: -50,
         opacity: 0
     },
     end: {
-        x: '-50%',
         y: 0,
         opacity: 1
     }
@@ -40,12 +38,10 @@ let inAnimate = {
 
 let outAnimate = {
     start: {
-        x: '-50%',
         y: 0,
         opacity: 1
     },
     end: {
-        x: '-50%',
         y: -50,
         opacity: 0
     }
