@@ -15,14 +15,5 @@
       { "libraryName": "element-ui", "styleLibraryName": "theme-chalk" }
     ]]
   ],
-  "comments": false,
-  "env": {
-    "test": {
-      "presets": ["env", "stage-2"],
-      "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node"]
-    },
-    "production": {
-      "plugins": ["transform-remove-console"]
-    }
-  }
+  "comments": false
 }
