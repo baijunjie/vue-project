@@ -172,7 +172,7 @@ export default {
 
     .footer {
         position: relative;
-        .col2-r(.8rem, @left: '.nickname', @right: '.audience');
+        .col2-r(position, .8rem, @left: '.nickname', @right: '.audience');
         .ftsz(.24rem);
         height: .4rem;
         line-height: .4rem;
