@@ -9,10 +9,24 @@
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no" />
     <link rel="shortcut icon" href="./static/img/favicon.ico" />
     <title></title>
+    <script>
+        // maxWidth 允许页面的最大宽度
+        // projectWidth 设计图宽度，当页面宽度正好等于设计图宽度时，页面的字体大小为 100px
+        (function() {
+            var htmlStyle = document.documentElement.style,
+                maxWidth = 750,
+                projectWidth = maxWidth,
+                recalc = function () { htmlStyle.fontSize = Math.min(window.innerWidth / projectWidth, maxWidth / projectWidth) * 100 + 'px' };
+            recalc();
+            window.addEventListener('DOMContentLoaded', recalc, false);
+            window.addEventListener('resize', recalc, false);
+        })();
+    </script>
 </head>
 
 <body ontouchstart>
     <div id="app"></div>
+    <script src="https://cdn.ronghub.com/RongIMLib-2.3.0.min.js"></script>
     <!-- built files will be auto injected -->
 </body>
 

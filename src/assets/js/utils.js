@@ -33,7 +33,10 @@ export function ajax(url, data, func) {
 	options = extend({
 		method: 'GET',
 		responseType: 'json',
-        withCredentials: false
+        withCredentials: false,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
 	}, options);
 
 	if (options.method.match(/get/i)) {
