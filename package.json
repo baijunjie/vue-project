@@ -56,7 +56,7 @@
     "gulp-i18n-combine": "^1.1.1",
     "html-webpack-plugin": "^3.1.0",
     "less": "2.7.2",
-    "less-lib": "^1.1.2",
+    "less-lib": "^1.1.3",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.5",
     "mini-css-extract-plugin": "^0.4.0",
