@@ -50,7 +50,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   optimization: {
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-  }
+  },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
