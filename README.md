@@ -1,6 +1,6 @@
 # Personal Vue template
 
-> A Vue.js project
+> Element UI project
 
 ## Build Setup
 

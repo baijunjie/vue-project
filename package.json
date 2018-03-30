@@ -1,7 +1,7 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Element UI project",
   "author": "baijunjie <625603381@qq.com>",
   "private": true,
   "scripts": {
