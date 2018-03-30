@@ -8,11 +8,13 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const webpackConfig = merge(baseWebpackConfig, {
+  // Provides process.env.NODE_ENV with value production. Enables UglifyJsPlugin, ModuleConcatenationPlugin and NoEmitOnErrorsPlugin.
   mode: 'production',
+
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -20,12 +22,15 @@ const webpackConfig = merge(baseWebpackConfig, {
       usePostCSS: true
     })
   },
+
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
+
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
+
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -38,36 +43,39 @@ const webpackConfig = merge(baseWebpackConfig, {
         }
       }
     },
-    runtimeChunk: true,
-    minimize: true,
+
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
+          output: {
+            comments: false // 移除所有注释
+          },
           compress: {
             warnings: false,
-            drop_debugger: true,
-            drop_console: true
+            drop_debugger: true, // 删除 debugger; 语句
+            drop_console: true // 删除 console
           }
         },
         sourceMap: config.build.productionSourceMap,
         parallel: true
+      }),
+
+      // Compress extracted CSS. We are using this plugin so that possible
+      // duplicated CSS from different components can be deduped.
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: config.build.productionSourceMap
+          ? { safe: true, discardComments: { removeAll: true }, map: { inline: false } }
+          : { safe: true, discardComments: { removeAll: true } }
       })
     ]
   },
   plugins: [
     // extract css into its own file
     new MiniCssExtractPlugin({
-      // filename: utils.assetsPath('css/[name].[contenthash].css')
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap
-        ? { safe: true, map: { inline: false } }
-        : { safe: true }
-    }),
+
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
@@ -85,10 +93,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
+
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
-    // enable scope hoisting
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    
     // copy custom static assets
     new CopyWebpackPlugin([
       {
