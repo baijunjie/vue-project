@@ -1,7 +1,7 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "description": "Element UI project",
+  "description": "Vuetifyjs project",
   "author": "baijunjie <625603381@qq.com>",
   "private": true,
   "scripts": {
