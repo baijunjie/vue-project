@@ -1,13 +1,10 @@
 <template>
-    <section>
-        <div id="mainHeader">
-            <v-header></v-header>
+    <section id="mainBody">
+        <div id="topBar">
+            <TopBar></TopBar>
         </div>
-        <div id="mainNav">
-            <v-nav></v-nav>
-        </div>
-        <div id="breadcrumb">
-            <v-breadcrumb></v-breadcrumb>
+        <div id="tabBar">
+            <TabBar></TabBar>
         </div>
         <section id="mainContent">
             <router-view :key="$route.fullPath"></router-view>
@@ -16,57 +13,48 @@
 </template>
 
 <script>
-import Header from './Header';
-import Nav from './Nav';
-import Breadcrumb from './Breadcrumb';
+import TopBar from './TopBar';
+import TabBar from './TabBar';
 
 export default {
     components: {
-        vHeader: Header,
-        vNav: Nav,
-        vBreadcrumb: Breadcrumb
+        TopBar,
+        TabBar
     }
 };
 </script>
 
 <style lang="less" rel="stylesheet/less">
 @import '~less-lib';
+@import '../../assets/less/_variables.less';
 
-@header_height: 60px;  // 头部高度
-@nav_width: 250px;  // 左侧导航宽度
-@breadcrumb: 30px; // 面包屑高度
-
-#mainHeader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9;
-    .lh(@header_height);
+#mainBody {
+    position: relative;
+    max-width: @max_width;
+    .cxbl;
 }
 
-#mainNav {
-    position: absolute;
-    top: @header_height;
-    bottom: 0;
-    left: 0;
-    width: @nav_width;
+#topBar {
+    .center-x(top 0, fixed);
+    z-index: 9;
+    width: 100%;
+    max-width: @max_width;
+    height: @topBar_height;
+    line-height: @topBar_height;
     background-color: #eef1f6;
 }
 
-#breadcrumb {
-    position: absolute;
-    top: @header_height;
-    left: @nav_width;
-    right: 0;
-    padding: 8px 10px;
-    height: @breadcrumb - 16px;
-    background-color: #f5f5f5;
+#tabBar {
+    .center-x(bottom 0, fixed);
+    z-index: 9;
+    width: 100%;
+    max-width: @max_width;
+    height: @tabBar_height;
+    background-color: #eef1f6;
 }
 
 #mainContent {
-    margin-top: @header_height + @breadcrumb;
-    margin-left: @nav_width;
-    padding: 20px;
+    padding-top: @topBar_height;
+    padding-bottom: @tabBar_height;
 }
 </style>

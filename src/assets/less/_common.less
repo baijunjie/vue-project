@@ -12,6 +12,7 @@ body {
 	color: @ftcl;
 	.fix;
 	.wbw;
+    font-weight: 100;
 }
 a { .acl(@lkcl); }
 
@@ -24,13 +25,7 @@ a { .acl(@lkcl); }
 }
 
 .full {
-	width: 100%;
-}
-
-.wrap {
-	width: @min_width - 20px;
-	padding: 0 10px;
-	.cxbl();
+	width: 100% !important;
 }
 
 .opacity-img {
@@ -43,6 +38,21 @@ a { .acl(@lkcl); }
 	.active({
 		.bxsd(box) !important;
 	});
+}
+
+.button {
+    .button-cube(@yellow, 16px);
+    font-weight: normal;
+
+    &.small {
+        .button-cube(@yellow, 12px);
+        font-weight: normal;
+    }
+
+    &.big {
+        .button-cube(@yellow, 20px);
+        font-weight: normal;
+    }
 }
 
 
