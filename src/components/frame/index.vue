@@ -30,7 +30,7 @@ export default {
 
 #mainBody {
     position: relative;
-    max-width: @max_width;
+    max-width: @screen_lg;
     .cxbl;
 }
 
@@ -38,7 +38,7 @@ export default {
     .center-x(top 0, fixed);
     z-index: 9;
     width: 100%;
-    max-width: @max_width;
+    max-width: @screen_lg;
     height: @topBar_height;
     line-height: @topBar_height;
     background-color: #eef1f6;
@@ -48,7 +48,7 @@ export default {
     .center-x(bottom 0, fixed);
     z-index: 9;
     width: 100%;
-    max-width: @max_width;
+    max-width: @screen_lg;
     height: @tabBar_height;
     background-color: #eef1f6;
 }
