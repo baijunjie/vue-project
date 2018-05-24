@@ -42,6 +42,8 @@
     position: absolute;
     right: 10px;
     top: 0;
+    height: 100%;
+    .ftsz(0);
     .va;
 
     .button {
