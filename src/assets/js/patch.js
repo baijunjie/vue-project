@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import i18n from '@/assets/js/i18n';
 
-import popup from '../plugins/popup/js/popup.js';
+import popup from '../plugins/popup/popup.js';
 
 let factory = function(template) {
     let VueComponent = Vue.extend({
