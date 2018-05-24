@@ -4,6 +4,7 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const production = process.env.NODE_ENV === 'production'
 
 function resolve (dir) {
@@ -93,6 +94,7 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
+    new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'

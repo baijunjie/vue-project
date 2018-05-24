@@ -10,10 +10,7 @@
   ],
   "plugins": [
     "transform-vue-jsx",
-    "lodash",
-    ["component", [
-      { "libraryName": "element-ui", "styleLibraryName": "theme-chalk" }
-    ]]
+    "lodash"
   ],
   "comments": false
 }

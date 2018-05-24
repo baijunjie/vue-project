@@ -56,10 +56,15 @@ export default {
         text-align: center;
     }
 
+    li {
+        height: 0.9rem;
+        line-height: 0.9rem;
+    }
+
     i {
-        margin-top: .08rem;
-        margin-bottom: .04rem;
+        margin-bottom: .1rem;
         .ftsz(.4rem);
+        vertical-align: middle;
         color: #999;
     }
 
