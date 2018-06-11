@@ -6373,9 +6373,9 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-photoclip@^3.3.3:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.3.6.tgz#7601d37c032719bd0cce367c5a74bfd0af1538d7"
+photoclip@^3.3.8:
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.3.8.tgz#3eeb287227ab3e3def6074396a2255f28077b4e4"
   dependencies:
     hammerjs "^2.0.8"
     iscroll baijunjie/iscroll
