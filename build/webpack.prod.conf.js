@@ -47,11 +47,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
+          warnings: false,
           output: {
             comments: false // 移除所有注释
           },
           compress: {
-            warnings: false,
             drop_debugger: true, // 删除 debugger; 语句
             drop_console: true // 删除 console
           }

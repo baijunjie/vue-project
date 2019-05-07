@@ -17,7 +17,7 @@
     "jquery": "^3.3.1",
     "jquery.animate": "^1.8.9",
     "moment": "^2.22.1",
-    "photoclip": "^3.3.8",
+    "photoclip": "^3.4.3",
     "vue": "^2.5.16",
     "vue-i18n": "^7.7.0",
     "vue-router": "^3.0.1"

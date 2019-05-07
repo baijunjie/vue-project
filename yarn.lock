@@ -93,6 +93,10 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@module-factory/utils@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@module-factory/utils/-/utils-0.1.8.tgz#7963d52d06b23444ed0a46ac45dc17114845524c"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -6373,10 +6377,11 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-photoclip@^3.3.8:
-  version "3.3.8"
-  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.3.8.tgz#3eeb287227ab3e3def6074396a2255f28077b4e4"
+photoclip@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/photoclip/-/photoclip-3.4.3.tgz#f060bc038b6471188beb45373f577e07cf418069"
   dependencies:
+    "@module-factory/utils" "^0.1.8"
     hammerjs "^2.0.8"
     iscroll baijunjie/iscroll
     lrz "^4.9.40"

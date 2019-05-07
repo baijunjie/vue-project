@@ -184,16 +184,9 @@ export function hideAction(elems, func, target) {
 export function findSameValueOfObjectFromArray(arr, key, value, typeMatch = true) {
     let findItem;
     arr.some(item => {
-        if (typeMatch) {
-            if (item[key] === value) {
-                findItem = item;
-                return true;
-            }
-        } else {
-            if (item[key] == value) {
-                findItem = item;
-                return true;
-            }
+        if (typeMatch ? item[key] === value : item[key] == value) {
+            findItem = item;
+            return true;
         }
     });
     return findItem;
@@ -219,11 +212,11 @@ export function getStorage(key) {
     return value;
 }
 // 本地存储数据
-export function setStorage(key, vlaue) {
-    if (typeof vlaue === 'object') {
-        vlaue = JSON.stringify(vlaue);
+export function setStorage(key, value) {
+    if (typeof value === 'object') {
+        value = JSON.stringify(value);
     }
-    return localStorage.setItem(key, vlaue);
+    return localStorage.setItem(key, value);
 }
 // 移除本地存储数据
 export function removeStorage(key) {
