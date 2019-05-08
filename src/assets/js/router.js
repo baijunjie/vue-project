@@ -29,135 +29,140 @@ const routeComponent = {
 const slashStartReg = new RegExp('^/+');
 const slashEndReg = new RegExp('/+$');
 
-const router = Object.assign(new VueRouter(), {
-    setRoutes,
-    getRoute,
-    findRoute,
-    deleteRoute,
-    matchRoutes
-});
+class Router extends VueRouter {
+    constructor(options) {
+        super(options)
+    }
 
-function setRoutes(routes) {
-    router.routes = initRoutes(routes);
-    router.matcher.addRoutes(toVueRoutes(router.routes));
-}
+    setRoutes(routes) {
+        this.routes = this.initRoutes(routes);
+        this.matcher.addRoutes(this.toVueRoutes(this.routes));
+    }
 
-function getRoute(key, value) {
-    return findRoute(router.routes, key, value);
-}
+    getRoute(key, value) {
+        return this.findRoute(this.routes, key, value);
+    }
 
-function initRoutes(routes, parentRoute) {
-    return routes.map(function(route) {
-        route.parent = parentRoute;
+    initRoutes(routes, parentRoute) {
+        return routes.map(route => {
+            route.parent = parentRoute;
 
-        if (!route.component) {
-            route.empty = true;
-        }
-
-        if (typeof route.path === 'undefined') {
-            if (route.name) {
-                route.path = route.name;
-            } else {
-                route.path = '';
+            if (!route.component) {
+                route.empty = true;
             }
-        }
 
-        if (typeof route.path === 'string') {
-            if (parentRoute && !slashStartReg.test(route.path)) {
-                // 处理相对路径
-                route.path = parentRoute.path.replace(slashEndReg, '') + '/' + route.path.replace(slashStartReg, '');
-            } else {
-                route.path = '/' + route.path.replace(slashStartReg, '');
-            }
-        }
-
-        if (route.children && route.children.length) {
-            route.children = initRoutes(route.children, route);
-        }
-
-        return route;
-    });
-}
-
-function toVueRoutes(routes) {
-    return routes.map(function (route) {
-        const vueRoute = Object.assign({}, route);
-
-        // 在递归中过滤掉创建的默认子路由
-        if (!vueRoute.meta) {
-            vueRoute.meta = route;
-        }
-
-        if (vueRoute.children && vueRoute.children.length) {
-            const children = Object.assign([], vueRoute.children);
-
-            if (vueRoute.component) {
-                const defaultChild = {
-                    meta: vueRoute.meta,
-                    name: vueRoute.name,
-                    path: ''
-                };
-                delete vueRoute.name;
-
-                if (vueRoute.frame) {
-                    defaultChild.component = vueRoute.defaultChild;
+            if (typeof route.path === 'undefined') {
+                if (route.name) {
+                    route.path = route.name;
                 } else {
-                    // 如果该路由不是一个frame，则将自己的组件作为默认页，然后用路由组件替换 component
-                    defaultChild.component = vueRoute.component;
+                    route.path = '';
+                }
+            }
+
+            if (typeof route.path === 'string') {
+                if (parentRoute && !slashStartReg.test(route.path)) {
+                    // 处理相对路径
+                    route.path = parentRoute.path.replace(slashEndReg, '') + '/' + route.path.replace(slashStartReg, '');
+                } else {
+                    route.path = '/' + route.path.replace(slashStartReg, '');
+                }
+            }
+
+            if (route.children && route.children.length) {
+                route.children = this.initRoutes(route.children, route);
+            }
+
+            return route;
+        });
+    }
+
+    toVueRoutes(routes) {
+        return routes.map(route => {
+            const vueRoute = Object.assign({}, route);
+
+            // 在递归中过滤掉创建的默认子路由
+            if (!vueRoute.meta) {
+                vueRoute.meta = route;
+            }
+
+            if (vueRoute.children && vueRoute.children.length) {
+                const children = Object.assign([], vueRoute.children);
+
+                if (vueRoute.component) {
+                    const defaultChild = {
+                        meta: vueRoute.meta,
+                        name: vueRoute.name,
+                        path: ''
+                    };
+                    delete vueRoute.name;
+
+                    if (vueRoute.frame) {
+                        defaultChild.component = vueRoute.defaultChild;
+                    } else {
+                        // 如果该路由不是一个frame，则将自己的组件作为默认页，然后用路由组件替换 component
+                        defaultChild.component = vueRoute.component;
+                        vueRoute.component = routeComponent;
+                    }
+
+                    defaultChild.component && children.unshift(defaultChild);
+                } else {
                     vueRoute.component = routeComponent;
                 }
 
-                defaultChild.component && children.unshift(defaultChild);
-            } else {
-                vueRoute.component = routeComponent;
+                vueRoute.children = this.toVueRoutes(children);
             }
 
-            vueRoute.children = toVueRoutes(children);
-        }
-
-        return vueRoute;
-    });
-}
-
-function findRoute(routes, key, value) {
-    let targetRoute;
-    routes.some(route => {
-        if (route[key] === value ||
-            key === 'path' &&
-            pathToRegexp(route[key]).exec(value)) {
-            return targetRoute = route;
-        } else if (route.children && route.children.length) {
-            return targetRoute = findRoute(route.children, key, value);
-        }
-    });
-    return targetRoute;
-}
-
-function deleteRoute(routes, key, value) {
-    let targetRoute;
-    routes.some((route, i) => {
-        if (route[key] === value ||
-            key === 'path' &&
-            pathToRegexp(route[key]).exec(value)) {
-            routes.splice(i, 1);
-            return targetRoute = route;
-        } else if (route.children && route.children.length) {
-            return targetRoute = deleteRoute(route.children, key, value);
-        }
-    });
-    return targetRoute;
-}
-
-function matchRoutes(routeInfo) {
-    let route = routeInfo.meta || routeInfo;
-    let matched = [route];
-
-    while (route.parent) {
-        route = route.parent;
-        matched.push(route);
+            return vueRoute;
+        });
     }
 
-    return matched.reverse();
+    findRoute(routes, key, value) {
+        let targetRoute;
+        routes.some(route => {
+            if (route[key] === value ||
+                key === 'path' &&
+                pathToRegexp(route[key]).exec(value)) {
+                return targetRoute = route;
+            } else if (route.children && route.children.length) {
+                return targetRoute = this.findRoute(route.children, key, value);
+            }
+        });
+        return targetRoute;
+    }
+
+    deleteRoute(routes, key, value) {
+        let targetRoute;
+        routes.some((route, i) => {
+            if (route[key] === value ||
+                key === 'path' &&
+                pathToRegexp(route[key]).exec(value)) {
+                routes.splice(i, 1);
+                return targetRoute = route;
+            } else if (route.children && route.children.length) {
+                return targetRoute = this.deleteRoute(route.children, key, value);
+            }
+        });
+        return targetRoute;
+    }
+
+    matchRoutes(routeInfo) {
+        let route = routeInfo.meta || routeInfo;
+        let matched = [route];
+
+        while (route.parent) {
+            route = route.parent;
+            matched.push(route);
+        }
+
+        return matched.reverse();
+    }
 }
 
-export default router;
+export function createRouter(routes) {
+    return new Router({
+        mode: 'history',
+        routes
+    });
+}
+
+export default createRouter()
